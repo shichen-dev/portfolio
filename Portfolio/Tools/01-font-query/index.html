@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Font Query</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel&family=Dancing+Script&family=Montserrat&family=Playfair+Display&family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #ffffff;
+        --card: #f7f8fa;
+        --border: #e5e7eb;
+        --text: #111827;
+        --muted: #6b7280;
+        --primary: #2563eb;
+        --input-bg: #ffffff;
+      }
+
+      /* ===== Dark Mode ===== */
+      [data-theme="dark"] {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --border: #334155;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --primary: #60a5fa;
+        --input-bg: #020617;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        padding: 88px 24px 24px;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      /* ===== Header ===== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        height: 64px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid var(--border);
+        padding: 0 24px;
+      }
+      [data-theme="dark"] header {
+        background: rgba(15, 23, 42, 0.85);
+      }
+
+      header h1 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+      }
+      header .tip {
+        margin-left: 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* ===== Controls ===== */
+      .controls {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .search-input {
+        flex: 1;
+        min-width: 240px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--input-bg);
+        color: var(--text);
+        font-size: 14px;
+      }
+      .btn {
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .btn:hover {
+        border-color: var(--primary);
+      }
+
+      /* ===== Groups ===== */
+      .group {
+        margin-top: 32px;
+      }
+      .group-title {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 12px;
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .item:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+      .preview {
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .usage {
+        font-size: 12px;
+        color: var(--muted);
+        margin-left: 8px;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        background: #111827;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        opacity: 0;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .show-more {
+        margin-top: 32px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        cursor: pointer;
+        user-select: none;
+      }
+      .show-more:hover {
+        color: var(--primary);
+      }
+      #extraPanel {
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>CSS 字体速查表</h1>
+      <div class="tip">点击复制 · 规范优先 · 全集备查</div>
+    </header>
+
+    <!-- Controls -->
+    <div class="controls">
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="搜索字体名称或 CSS..."
+      />
+      <button class="btn" id="resetBtn">重置</button>
+      <button class="btn" id="themeToggle">🌙 / ☀️</button>
+    </div>
+
+    <!-- Content -->
+    <section class="group">
+      <div class="group-title">✅ 正文 / UI（推荐）</div>
+      <div class="grid" id="ui"></div>
+    </section>
+    <section class="group">
+      <div class="group-title">📜 衬线 / 传统正文</div>
+      <div class="grid" id="serif"></div>
+    </section>
+    <section class="group">
+      <div class="group-title">💻 代码 / 等宽字体</div>
+      <div class="grid" id="mono"></div>
+    </section>
+    <section class="group">
+      <div class="group-title">🎨 博客 / 装饰字体</div>
+      <div class="grid" id="blog"></div>
+    </section>
+
+    <section class="group" id="extraPanel" style="display: none">
+      <div class="group-title">📦 扩展字体池（仅供查阅，不建议生产使用）</div>
+      <div class="grid" id="extra"></div>
+    </section>
+
+    <div class="show-more" id="toggleMore">显示更多字体 ▾</div>
+    <div class="toast" id="toast">已复制</div>
+
+    <script>
+      const groupsData = {
+        ui: [
+          {
+            label: "无衬线（跨平台推荐）",
+            css: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, PingFang SC, Microsoft YaHei, sans-serif",
+          },
+          {
+            label: "PingFang SC（macOS）",
+            css: "PingFang SC, Microsoft YaHei, sans-serif",
+          },
+          {
+            label: "Microsoft YaHei（Windows）",
+            css: "Microsoft YaHei, PingFang SC, sans-serif",
+          },
+        ],
+        serif: [
+          { label: "宋体（SimSun）", css: "SimSun, Songti SC, serif" },
+          {
+            label: "Georgia（长文友好）",
+            css: "Georgia, Times New Roman, serif",
+          },
+        ],
+        mono: [
+          {
+            label: "代码字体栈（推荐）",
+            css: "SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace",
+          },
+        ],
+        blog: [
+          {
+            label: "Playfair Display（优雅长衬线）",
+            css: "Playfair Display, Georgia, serif",
+            usage: "博客大标题",
+          },
+          {
+            label: "Cinzel（古典文艺）",
+            css: "Cinzel, Georgia, serif",
+            usage: "Logo / About",
+          },
+          {
+            label: "Raleway（细长现代）",
+            css: "Raleway, sans-serif",
+            usage: "卡片标题",
+          },
+        ],
+        extra: [
+          { label: "Arial", css: "Arial, sans-serif" },
+          { label: "Helvetica Neue", css: "Helvetica Neue, Arial, sans-serif" },
+          { label: "Tahoma", css: "Tahoma, sans-serif" },
+          { label: "Times New Roman", css: "Times New Roman, Times, serif" },
+          { label: "Courier New", css: "Courier New, monospace" },
+          { label: "华文宋体", css: "STSong, SimSun, serif" },
+          { label: "华文楷体", css: "STKaiti, KaiTi, serif" },
+          { label: "思源黑体 CN", css: "Source Han Sans CN, sans-serif" },
+        ],
+      };
+
+      const $toast = document.getElementById("toast");
+      const allGroups = ["ui", "serif", "mono", "blog", "extra"];
+
+      function renderGroup(groupId, list) {
+        const container = document.getElementById(groupId);
+        container.innerHTML = "";
+        list.forEach((item) => {
+          const el = document.createElement("div");
+          el.className = "item";
+          el.innerHTML = `<div class="preview" style="font-family:${item.css}">${item.label}<span class="usage">${item.usage || ""}</span></div>`;
+          el.onclick = () => copyToClipboard(`font-family: ${item.css};`);
+          container.appendChild(el);
+        });
+      }
+
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+          $toast.textContent = "已复制：" + text;
+          $toast.classList.add("show");
+          setTimeout(() => $toast.classList.remove("show"), 1200);
+        });
+      }
+
+      // Initial Render
+      allGroups.forEach((g) => renderGroup(g, groupsData[g]));
+
+      // Search
+      document.getElementById("searchInput").addEventListener("input", (e) => {
+        const keyword = e.target.value.toLowerCase();
+        allGroups.forEach((g) => {
+          const filtered = groupsData[g].filter(
+            (i) =>
+              i.label.toLowerCase().includes(keyword) ||
+              i.css.toLowerCase().includes(keyword),
+          );
+          renderGroup(g, filtered);
+        });
+      });
+
+      // Reset
+      document.getElementById("resetBtn").onclick = () => {
+        document.getElementById("searchInput").value = "";
+        allGroups.forEach((g) => renderGroup(g, groupsData[g]));
+      };
+
+      // Theme Toggle
+      document.getElementById("themeToggle").onclick = () => {
+        const isDark = document.body.getAttribute("data-theme") === "dark";
+        document.body.setAttribute("data-theme", isDark ? "light" : "dark");
+      };
+
+      // Show More
+      const toggleBtn = document.getElementById("toggleMore");
+      const extraPanel = document.getElementById("extraPanel");
+      toggleBtn.onclick = () => {
+        const isHidden = extraPanel.style.display === "none";
+        extraPanel.style.display = isHidden ? "block" : "none";
+        toggleBtn.textContent = isHidden ? "收起扩展字体 ▴" : "显示更多字体 ▾";
+      };
+    </script>
+  </body>
+</html>

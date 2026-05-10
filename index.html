@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人作品集 | 前端小站</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Microsoft Yahei", sans-serif;
+        background: #f5f7fa;
+        padding: 40px 20px;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .head {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .head h1 {
+        color: #222;
+        margin-bottom: 10px;
+      }
+      .head p {
+        color: #666;
+      }
+      .card-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .card {
+        background: #fff;
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px #00000015;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px #00000020;
+      }
+      .card h2 {
+        color: #333;
+        margin-bottom: 12px;
+      }
+      .card p {
+        color: #888;
+      }
+      @media (max-width: 600px) {
+        .card-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="head">
+        <h1>个人前端作品集</h1>
+        <p>JS小工具 · 趣味小游戏 · 前端练习项目</p>
+      </div>
+
+      <div class="card-wrap">
+        <!-- 小工具入口 -->
+        <a href="./Portfolio/Tools/index.html" class="card">
+          <h2>🧰 实用小工具</h2>
+          <p>时间转换、密码生成、各类网页小工具</p>
+        </a>
+        <!-- 小游戏入口 -->
+        <a href="./Portfolio/Games/index.html" class="card">
+          <h2>🎮 趣味小游戏</h2>
+          <p>贪吃蛇、2048、打地鼠等JS网页游戏</p>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
