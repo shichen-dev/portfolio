@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI智能训练师五级答题（300题）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* 头部样式 */
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #3498db;
+      }
+
+      h1 {
+        color: #2c3e50;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #7f8c8d;
+        font-size: 16px;
+      }
+
+      /* 重新开始 */
+      .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background-color: #c0392b;
+      }
+
+      /* 选项卡样式 */
+      .tabs {
+        display: flex;
+        background-color: white;
+        border-radius: 10px 10px 0 0;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 0;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 15px 10px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        color: #5d6d7e;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+      }
+
+      .tab:hover {
+        background-color: #e8f4fc;
+        color: #3498db;
+      }
+
+      .tab.active {
+        background-color: white;
+        color: #3498db;
+        border-bottom: 3px solid #3498db;
+      }
+
+      /* 主内容区域 */
+      .main-content {
+        background-color: white;
+        border-radius: 0 0 10px 10px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        min-height: 500px;
+        position: relative;
+      }
+
+      /* 答题区域 */
+      .question-container {
+        margin-bottom: 30px;
+      }
+
+      .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+
+      .question-number {
+        font-size: 18px;
+        color: #3498db;
+        font-weight: 600;
+      }
+
+      .question-type {
+        background-color: #e8f4fc;
+        color: #3498db;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      .question-text {
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: #f9fbfd;
+        border-radius: 8px;
+        border-left: 4px solid #3498db;
+      }
+
+      /* 选项区域 */
+      .options-container {
+        margin-bottom: 30px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 2px solid #ecf0f1;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .option:hover {
+        background-color: #e8f4fc;
+        border-color: #a5d8ff;
+      }
+
+      .option.selected {
+        background-color: #e8f4fc;
+        border-color: #3498db;
+      }
+
+      .option.correct {
+        background-color: #d4edda;
+        border-color: #28a745;
+      }
+
+      .option.incorrect {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+      }
+
+      .option-label {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #3498db;
+        color: white;
+        border-radius: 50%;
+        margin-right: 15px;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+
+      .option-text {
+        flex-grow: 1;
+        font-size: 16px;
+      }
+
+      /* 反馈区域 */
+      .feedback {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        font-weight: 600;
+        display: none;
+      }
+
+      .feedback.correct {
+        background-color: #d4edda;
+        color: #155724;
+        display: block;
+      }
+
+      .feedback.incorrect {
+        background-color: #f8d7da;
+        color: #721c24;
+        display: block;
+      }
+
+      /* 按钮区域 */
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: #3498db;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #2980b9;
+      }
+
+      .btn-primary:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      /* 统计信息 */
+      .stats-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #ecf0f1;
+        color: #5d6d7e;
+        font-size: 15px;
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c3e50;
+      }
+
+      /* 错题本样式 */
+      .wrong-list-container {
+        display: none;
+      }
+
+      .wrong-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .wrong-list-title {
+        font-size: 20px;
+        color: #2c3e50;
+      }
+
+      .wrong-list-count {
+        background-color: #e74c3c;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      .wrong-list {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .wrong-item {
+        background-color: #f9f9f9;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border-left: 4px solid #e74c3c;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .wrong-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .wrong-question-text {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .wrong-answer-info {
+        font-size: 14px;
+        color: #7f8c8d;
+      }
+
+      .wrong-answer-info span {
+        color: #e74c3c;
+        font-weight: 600;
+      }
+
+      /* 移动端适配 */
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 22px;
+        }
+
+        .tabs {
+          flex-wrap: wrap;
+        }
+
+        .tab {
+          flex: 1 0 50%;
+          padding: 12px 5px;
+          font-size: 14px;
+        }
+
+        .main-content {
+          padding: 20px 15px;
+        }
+
+        .question-text {
+          font-size: 16px;
+        }
+
+        .option {
+          padding: 12px 15px;
+        }
+
+        .button-container {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .stats-container {
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .stat-item {
+          flex: 1 0 45%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>AI智能训练师五级答题（300题）</h1>
+        <div class="subtitle">基于AI智能训练师五级考试理论的答题训练系统</div>
+      </header>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="sequential">顺序练习</button>
+        <button class="tab" data-tab="random">随机练习</button>
+        <button class="tab" data-tab="exam">模拟考试</button>
+        <button class="tab" data-tab="wrong">错题本</button>
+        <button class="tab" data-tab="review">错题重练</button>
+      </div>
+
+      <!-- 顺序练习模式 -->
+      <div class="main-content" id="sequential-mode">
+        <div class="question-container">
+          <div class="question-header">
+            <div class="question-number">题目 1 / 300</div>
+            <!-- <div class="question-type">单选题</div> -->
+          </div>
+
+          <div class="question-text" id="question-text">
+            LabelMe提供哪些类型的标注工具?
+          </div>
+
+          <div class="options-container" id="options-container">
+            <div class="option" data-value="A">
+              <div class="option-label">A</div>
+              <div class="option-text">矩形框和多边形</div>
+            </div>
+            <div class="option" data-value="B">
+              <div class="option-label">B</div>
+              <div class="option-text">点和线</div>
+            </div>
+            <div class="option" data-value="C">
+              <div class="option-label">C</div>
+              <div class="option-text">矩形框、多边形、点和线</div>
+            </div>
+            <div class="option" data-value="D">
+              <div class="option-label">D</div>
+              <div class="option-text">以上都不是</div>
+            </div>
+          </div>
+
+          <div class="feedback" id="feedback"></div>
+
+          <div class="button-container">
+            <button class="btn btn-secondary" id="prev-btn">上一题</button>
+            <div>
+              <button class="btn btn-primary" id="submit-btn" disabled>
+                确定答案
+              </button>
+              <button class="btn btn-primary" id="next-btn" disabled>
+                下一题
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-label">正确率</div>
+            <div class="stat-value" id="accuracy-rate">0%</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">已答/总数</div>
+            <div class="stat-value" id="answered-count">0/300</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">正确数</div>
+            <div class="stat-value" id="correct-count">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">错误数</div>
+            <div class="stat-value" id="wrong-count">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 错题本模式 -->
+      <div class="main-content wrong-list-container" id="wrong-mode">
+        <div class="wrong-list-header">
+          <div class="wrong-list-title">我的错题本</div>
+          <div class="wrong-list-count">
+            共 <span id="wrong-count-badge">0</span> 题
+          </div>
+        </div>
+
+        <div class="wrong-list" id="wrong-list">
+          <!-- 错题列表将通过JavaScript动态生成 -->
+          <div style="text-align: center; padding: 40px 20px; color: #7f8c8d">
+            暂无错题记录，快去练习吧！
+          </div>
+        </div>
+
+        <div class="button-container" style="margin-top: 20px">
+          <button class="btn btn-secondary" id="clear-wrong-btn">
+            清空错题本
+          </button>
+          <button class="btn btn-primary" id="start-review-btn">
+            开始重练
+          </button>
+        </div>
+      </div>
+
+      <!-- 错题重练模式 -->
+      <div class="main-content wrong-list-container" id="review-mode">
+        <div class="question-container">
+          <div class="question-header">
+            <div class="question-number">错题重练 1 / 0</div>
+            <!-- <div class="question-type">单选题</div> -->
+          </div>
+
+          <div class="question-text" id="review-question-text">暂无错题</div>
+
+          <div class="options-container" id="review-options-container">
+            <div class="option" data-value="A">
+              <div class="option-label">A</div>
+              <div class="option-text">选项A</div>
+            </div>
+            <div class="option" data-value="B">
+              <div class="option-label">B</div>
+              <div class="option-text">选项B</div>
+            </div>
+            <div class="option" data-value="C">
+              <div class="option-label">C</div>
+              <div class="option-label">C</div>
+              <div class="option-text">选项C</div>
+            </div>
+            <div class="option" data-value="D">
+              <div class="option-label">D</div>
+              <div class="option-text">选项D</div>
+            </div>
+          </div>
+
+          <div class="feedback" id="review-feedback"></div>
+
+          <div class="button-container">
+            <button class="btn btn-secondary" id="review-prev-btn">
+              上一题
+            </button>
+            <div>
+              <button class="btn btn-primary" id="review-submit-btn" disabled>
+                确定答案
+              </button>
+              <button class="btn btn-primary" id="review-next-btn" disabled>
+                下一题
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-label">正确率</div>
+            <div class="stat-value" id="review-accuracy-rate">0%</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">已答/总数</div>
+            <div class="stat-value" id="review-answered-count">0/0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">正确数</div>
+            <div class="stat-value" id="review-correct-count">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">错误数</div>
+            <div class="stat-value" id="review-wrong-count">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // 导入题库 题库数据 - 基于文档内容提取的题目
+      // import questionBank from "./question-bank.js";
+      import questionBank from "./question-bank.js";
+
+      // 应用状态
+      const appState = {
+        currentMode: "sequential", // sequential, random, exam, wrong, review
+        currentQuestionIndex: 0,
+        selectedOption: null,
+        isAnswered: false,
+        isCorrect: false,
+        userAnswers: Array(questionBank.length).fill(null),
+        correctCount: 0,
+        wrongCount: 0,
+        answeredCount: 0,
+        wrongQuestions: [],
+        reviewQuestions: [],
+        reviewIndex: 0,
+        examMode: {
+          isActive: false,
+          timeLimit: 60 * 60, // 60分钟
+          timeLeft: 60 * 60,
+          timer: null,
+        },
+      };
+
+      // DOM元素
+      const sequentialModeEl = document.getElementById("sequential-mode");
+      const wrongModeEl = document.getElementById("wrong-mode");
+      const reviewModeEl = document.getElementById("review-mode");
+      const questionTextEl = document.getElementById("question-text");
+      const optionsContainerEl = document.getElementById("options-container");
+      const feedbackEl = document.getElementById("feedback");
+      const submitBtn = document.getElementById("submit-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const prevBtn = document.getElementById("prev-btn");
+      const tabs = document.querySelectorAll(".tab");
+      const questionNumberEl = document.querySelector(".question-number");
+      const accuracyRateEl = document.getElementById("accuracy-rate");
+      const answeredCountEl = document.getElementById("answered-count");
+      const correctCountEl = document.getElementById("correct-count");
+      const wrongCountEl = document.getElementById("wrong-count");
+      const wrongListEl = document.getElementById("wrong-list");
+      const wrongCountBadgeEl = document.getElementById("wrong-count-badge");
+      const clearWrongBtn = document.getElementById("clear-wrong-btn");
+      const startReviewBtn = document.getElementById("start-review-btn");
+      const reviewQuestionTextEl = document.getElementById(
+        "review-question-text",
+      );
+      const reviewOptionsContainerEl = document.getElementById(
+        "review-options-container",
+      );
+      const reviewFeedbackEl = document.getElementById("review-feedback");
+      const reviewSubmitBtn = document.getElementById("review-submit-btn");
+      const reviewNextBtn = document.getElementById("review-next-btn");
+      const reviewPrevBtn = document.getElementById("review-prev-btn");
+      const reviewQuestionNumberEl =
+        document.querySelectorAll(".question-number")[1];
+      const reviewAccuracyRateEl = document.getElementById(
+        "review-accuracy-rate",
+      );
+      const reviewAnsweredCountEl = document.getElementById(
+        "review-answered-count",
+      );
+      const reviewCorrectCountEl = document.getElementById(
+        "review-correct-count",
+      );
+      const reviewWrongCountEl = document.getElementById("review-wrong-count");
+
+      // 初始化应用
+      function initApp() {
+        loadStateFromStorage();
+        setupEventListeners();
+        renderQuestion();
+        updateStats();
+        updateWrongList();
+
+        // 设置默认活动选项卡
+        setActiveTab("sequential");
+      }
+
+      // 从本地存储加载状态
+      function loadStateFromStorage() {
+        const savedState = localStorage.getItem("aiTrainerAppState");
+        if (savedState) {
+          const parsed = JSON.parse(savedState);
+          appState.userAnswers = parsed.userAnswers || appState.userAnswers;
+          appState.correctCount = parsed.correctCount || 0;
+          appState.wrongCount = parsed.wrongCount || 0;
+          appState.answeredCount = parsed.answeredCount || 0;
+          appState.wrongQuestions = parsed.wrongQuestions || [];
+          appState.reviewQuestions = [...appState.wrongQuestions];
+        }
+      }
+
+      // 保存状态到本地存储
+      function saveStateToStorage() {
+        const stateToSave = {
+          userAnswers: appState.userAnswers,
+          correctCount: appState.correctCount,
+          wrongCount: appState.wrongCount,
+          answeredCount: appState.answeredCount,
+          wrongQuestions: appState.wrongQuestions,
+        };
+        localStorage.setItem("aiTrainerAppState", JSON.stringify(stateToSave));
+      }
+
+      // 设置事件监听器
+      function setupEventListeners() {
+        // 选项卡切换
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const tabName = tab.getAttribute("data-tab");
+            setActiveTab(tabName);
+          });
+        });
+
+        // 选项点击
+        optionsContainerEl.addEventListener("click", (e) => {
+          if (appState.isAnswered) return;
+
+          const optionEl = e.target.closest(".option");
+          if (!optionEl) return;
+
+          // 移除之前的选择
+          document.querySelectorAll(".option").forEach((opt) => {
+            opt.classList.remove("selected");
+          });
+
+          // 设置新选择
+          optionEl.classList.add("selected");
+          appState.selectedOption = optionEl.getAttribute("data-value");
+          submitBtn.disabled = false;
+        });
+
+        // 提交答案
+        submitBtn.addEventListener("click", checkAnswer);
+
+        // 下一题
+        nextBtn.addEventListener("click", () => {
+          if (
+            appState.currentMode === "sequential" ||
+            appState.currentMode === "random"
+          ) {
+            goToNextQuestion();
+          }
+        });
+
+        // 上一题
+        prevBtn.addEventListener("click", goToPrevQuestion);
+
+        // 清空错题本
+        clearWrongBtn.addEventListener("click", clearWrongQuestions);
+
+        // 开始重练
+        startReviewBtn.addEventListener("click", startReview);
+
+        // 错题重练选项点击
+        reviewOptionsContainerEl.addEventListener("click", (e) => {
+          if (appState.isAnswered) return;
+
+          const optionEl = e.target.closest(".option");
+          if (!optionEl) return;
+
+          // 移除之前的选择
+          document
+            .querySelectorAll("#review-options-container .option")
+            .forEach((opt) => {
+              opt.classList.remove("selected");
+            });
+
+          // 设置新选择
+          optionEl.classList.add("selected");
+          appState.selectedOption = optionEl.getAttribute("data-value");
+          reviewSubmitBtn.disabled = false;
+        });
+
+        // 错题重练提交答案
+        reviewSubmitBtn.addEventListener("click", checkReviewAnswer);
+
+        // 错题重练下一题
+        reviewNextBtn.addEventListener("click", () => {
+          if (appState.currentMode === "review") {
+            goToNextReviewQuestion();
+          }
+        });
+
+        // 错题重练上一题
+        reviewPrevBtn.addEventListener("click", goToPrevReviewQuestion);
+
+        // 重新开始按钮
+        const resetBtn = document.getElementById("reset-btn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", resetAllProgress);
+        }
+      }
+
+      // 设置活动选项卡
+      function setActiveTab(tabName) {
+        // 更新选项卡样式
+        tabs.forEach((tab) => {
+          if (tab.getAttribute("data-tab") === tabName) {
+            tab.classList.add("active");
+          } else {
+            tab.classList.remove("active");
+          }
+        });
+
+        // 更新内容显示
+        appState.currentMode = tabName;
+
+        if (tabName === "wrong") {
+          sequentialModeEl.style.display = "none";
+          wrongModeEl.style.display = "block";
+          reviewModeEl.style.display = "none";
+          updateWrongList();
+        } else if (tabName === "review") {
+          sequentialModeEl.style.display = "none";
+          wrongModeEl.style.display = "none";
+          reviewModeEl.style.display = "block";
+          if (appState.reviewQuestions.length > 0) {
+            renderReviewQuestion();
+          } else {
+            reviewQuestionTextEl.textContent =
+              "暂无错题，请先在其他模式中答题积累错题";
+            reviewOptionsContainerEl.style.display = "none";
+          }
+        } else {
+          sequentialModeEl.style.display = "block";
+          wrongModeEl.style.display = "none";
+          reviewModeEl.style.display = "none";
+
+          if (tabName === "random") {
+            // 随机模式：随机显示题目
+            appState.currentQuestionIndex = Math.floor(
+              Math.random() * questionBank.length,
+            );
+          } else if (tabName === "sequential") {
+            // 顺序模式：从上次进度继续
+            // 如果当前题目已答过，则找到第一个未答的题目
+            if (appState.userAnswers[appState.currentQuestionIndex] !== null) {
+              const unansweredIndex = appState.userAnswers.findIndex(
+                (answer) => answer === null,
+              );
+              if (unansweredIndex !== -1) {
+                appState.currentQuestionIndex = unansweredIndex;
+              }
+            }
+          } else if (tabName === "exam") {
+            // 考试模式：重置状态，开始计时
+            startExamMode();
+          }
+
+          renderQuestion();
+        }
+      }
+
+      // 渲染题目
+      function renderQuestion() {
+        const question = questionBank[appState.currentQuestionIndex];
+
+        // 更新题目信息
+        questionNumberEl.textContent = `题目 ${appState.currentQuestionIndex + 1} / ${questionBank.length}`;
+        questionTextEl.textContent = question.question;
+
+        // 清空选项
+        optionsContainerEl.innerHTML = "";
+
+        // 添加选项
+        const optionLabels = ["A", "B", "C", "D"];
+        optionLabels.forEach((label, index) => {
+          if (question.options[index]) {
+            const optionEl = document.createElement("div");
+            optionEl.className = "option";
+            optionEl.setAttribute("data-value", label);
+
+            optionEl.innerHTML = `
+                        <div class="option-label">${label}</div>
+                        <div class="option-text">${question.options[index]}</div>
+                    `;
+
+            optionsContainerEl.appendChild(optionEl);
+          }
+        });
+
+        // 重置状态
+        appState.selectedOption = null;
+        appState.isAnswered = false;
+        feedbackEl.className = "feedback";
+        feedbackEl.textContent = "";
+        feedbackEl.style.display = "none";
+
+        // 如果之前已答过此题，显示答案
+        if (appState.userAnswers[appState.currentQuestionIndex] !== null) {
+          const userAnswer =
+            appState.userAnswers[appState.currentQuestionIndex];
+          const correctAnswer = question.answer;
+
+          // 高亮用户选择的选项
+          const userOptionEl = document.querySelector(
+            `.option[data-value="${userAnswer}"]`,
+          );
+          if (userOptionEl) {
+            userOptionEl.classList.add("selected");
+            if (userAnswer === correctAnswer) {
+              userOptionEl.classList.add("correct");
+            } else {
+              userOptionEl.classList.add("incorrect");
+
+              // 高亮正确答案
+              const correctOptionEl = document.querySelector(
+                `.option[data-value="${correctAnswer}"]`,
+              );
+              if (correctOptionEl) {
+                correctOptionEl.classList.add("correct");
+              }
+            }
+          }
+
+          // 显示反馈
+          feedbackEl.textContent =
+            userAnswer === correctAnswer
+              ? `回答正确！${question.explanation}`
+              : `回答错误！正确答案是${correctAnswer}。${question.explanation}`;
+          feedbackEl.className =
+            userAnswer === correctAnswer
+              ? "feedback correct"
+              : "feedback incorrect";
+          feedbackEl.style.display = "block";
+
+          appState.isAnswered = true;
+          submitBtn.disabled = true;
+          nextBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+          nextBtn.disabled = true;
+        }
+
+        // 更新按钮状态
+        prevBtn.disabled = appState.currentQuestionIndex === 0;
+      }
+
+      // 检查答案
+      function checkAnswer() {
+        // 打印 已选答案 和 答案对象
+        // console.log(appState.selectedOption);
+        // console.log(questionBank[appState.currentQuestionIndex]);
+        if (!appState.selectedOption || appState.isAnswered) return;
+
+        const question = questionBank[appState.currentQuestionIndex];
+
+        // 判断题的答案是 正确 或者 错误，目前题目传的是A B，需要做一些转换
+        // 如果是判断题就把A/B转换为 正确/错误
+        if (
+          JSON.stringify(question.options) === JSON.stringify(["正确", "错误"])
+        ) {
+          appState.selectedOption =
+            appState.selectedOption === "A" ? "正确" : "错误";
+        }
+
+        const isCorrect = appState.selectedOption === question.answer;
+
+        // 记录用户答案
+        appState.userAnswers[appState.currentQuestionIndex] =
+          appState.selectedOption;
+        appState.isAnswered = true;
+        appState.isCorrect = isCorrect;
+
+        // 更新统计
+        if (isCorrect) {
+          appState.correctCount++;
+        } else {
+          appState.wrongCount++;
+          // 添加到错题本
+          if (!appState.wrongQuestions.some((q) => q.id === question.id)) {
+            appState.wrongQuestions.push({
+              id: question.id,
+              question: question.question,
+              userAnswer: appState.selectedOption,
+              correctAnswer: question.answer,
+              explanation: question.explanation,
+            });
+            appState.reviewQuestions = [...appState.wrongQuestions];
+          }
+        }
+
+        appState.answeredCount++;
+
+        // 更新UI
+        const selectedOptionEl = document.querySelector(
+          `.option[data-value="${appState.selectedOption}"]`,
+        );
+        if (selectedOptionEl) {
+          selectedOptionEl.classList.add(isCorrect ? "correct" : "incorrect");
+        }
+
+        // 如果回答错误，显示正确答案
+        if (!isCorrect) {
+          const correctOptionEl = document.querySelector(
+            `.option[data-value="${question.answer}"]`,
+          );
+          if (correctOptionEl) {
+            correctOptionEl.classList.add("correct");
+          }
+        }
+
+        // 显示反馈
+        feedbackEl.textContent = isCorrect
+          ? `回答正确！${question.explanation}`
+          : `回答错误！正确答案是${question.answer}。${question.explanation}`;
+        feedbackEl.className = isCorrect
+          ? "feedback correct"
+          : "feedback incorrect";
+        feedbackEl.style.display = "block";
+
+        // 更新按钮状态
+        submitBtn.disabled = true;
+        nextBtn.disabled = false;
+
+        // 保存状态
+        saveStateToStorage();
+        updateStats();
+        updateWrongList();
+      }
+
+      // 下一题
+      function goToNextQuestion() {
+        if (appState.currentQuestionIndex < questionBank.length - 1) {
+          appState.currentQuestionIndex++;
+          renderQuestion();
+        } else {
+          // 如果是最后一题，提示完成
+          alert("恭喜！您已经完成了所有题目！");
+        }
+      }
+
+      // 上一题
+      function goToPrevQuestion() {
+        if (appState.currentQuestionIndex > 0) {
+          appState.currentQuestionIndex--;
+          renderQuestion();
+        }
+      }
+
+      // 更新统计数据
+      function updateStats() {
+        const accuracy =
+          appState.answeredCount > 0
+            ? Math.round((appState.correctCount / appState.answeredCount) * 100)
+            : 0;
+
+        accuracyRateEl.textContent = `${accuracy}%`;
+        answeredCountEl.textContent = `${appState.answeredCount}/${questionBank.length}`;
+        correctCountEl.textContent = appState.correctCount;
+        wrongCountEl.textContent = appState.wrongCount;
+
+        // 更新错题本徽章
+        wrongCountBadgeEl.textContent = appState.wrongQuestions.length;
+      }
+
+      // 更新错题列表
+      function updateWrongList() {
+        wrongListEl.innerHTML = "";
+
+        if (appState.wrongQuestions.length === 0) {
+          wrongListEl.innerHTML =
+            '<div style="text-align: center; padding: 40px 20px; color: #7f8c8d;">暂无错题记录，快去练习吧！</div>';
+          return;
+        }
+
+        appState.wrongQuestions.forEach((wrong, index) => {
+          const wrongItemEl = document.createElement("div");
+          wrongItemEl.className = "wrong-item";
+          wrongItemEl.innerHTML = `
+                    <div class="wrong-question-text">${index + 1}. ${wrong.question}</div>
+                    <div class="wrong-answer-info">你的答案: <span>${wrong.userAnswer}</span> | 正确答案: <span>${wrong.correctAnswer}</span></div>
+                `;
+
+          wrongItemEl.addEventListener("click", () => {
+            // 切换到顺序练习并跳转到该题目
+            setActiveTab("sequential");
+            const questionIndex = questionBank.findIndex(
+              (q) => q.id === wrong.id,
+            );
+            if (questionIndex !== -1) {
+              appState.currentQuestionIndex = questionIndex;
+              renderQuestion();
+            }
+          });
+
+          wrongListEl.appendChild(wrongItemEl);
+        });
+      }
+
+      // 清空错题本
+      function clearWrongQuestions() {
+        if (confirm("确定要清空所有错题记录吗？此操作不可撤销。")) {
+          appState.wrongQuestions = [];
+          appState.reviewQuestions = [];
+          updateWrongList();
+          saveStateToStorage();
+
+          // 如果当前在错题重练模式，刷新显示
+          if (appState.currentMode === "review") {
+            reviewQuestionTextEl.textContent = "错题本已清空，暂无错题可练习";
+            reviewOptionsContainerEl.style.display = "none";
+          }
+        }
+      }
+
+      // 开始错题重练
+      function startReview() {
+        if (appState.reviewQuestions.length === 0) {
+          alert("错题本为空，请先在其他模式中答题积累错题。");
+          return;
+        }
+
+        setActiveTab("review");
+        appState.reviewIndex = 0;
+        renderReviewQuestion();
+      }
+
+      // 渲染错题重练题目
+      function renderReviewQuestion() {
+        if (appState.reviewQuestions.length === 0) {
+          reviewQuestionTextEl.textContent = "暂无错题";
+          reviewOptionsContainerEl.style.display = "none";
+          return;
+        }
+
+        const wrongItem = appState.reviewQuestions[appState.reviewIndex];
+        const originalQuestion = questionBank.find(
+          (q) => q.id === wrongItem.id,
+        );
+
+        if (!originalQuestion) return;
+
+        // 更新题目信息
+        reviewQuestionNumberEl.textContent = `错题重练 ${appState.reviewIndex + 1} / ${appState.reviewQuestions.length}`;
+        reviewQuestionTextEl.textContent = originalQuestion.question;
+        reviewOptionsContainerEl.style.display = "block";
+
+        // 清空选项
+        reviewOptionsContainerEl.innerHTML = "";
+
+        // 添加选项
+        const optionLabels = ["A", "B", "C", "D"];
+        optionLabels.forEach((label, index) => {
+          if (originalQuestion.options[index]) {
+            const optionEl = document.createElement("div");
+            optionEl.className = "option";
+            optionEl.setAttribute("data-value", label);
+
+            optionEl.innerHTML = `
+                        <div class="option-label">${label}</div>
+                        <div class="option-text">${originalQuestion.options[index]}</div>
+                    `;
+
+            reviewOptionsContainerEl.appendChild(optionEl);
+          }
+        });
+
+        // 重置状态
+        appState.selectedOption = null;
+        appState.isAnswered = false;
+        reviewFeedbackEl.className = "feedback";
+        reviewFeedbackEl.textContent = "";
+        reviewFeedbackEl.style.display = "none";
+
+        // 更新按钮状态
+        reviewSubmitBtn.disabled = true;
+        reviewNextBtn.disabled = true;
+        reviewPrevBtn.disabled = appState.reviewIndex === 0;
+
+        // 更新重练统计
+        updateReviewStats();
+      }
+
+      // 检查错题重练答案
+      function checkReviewAnswer() {
+        if (!appState.selectedOption || appState.isAnswered) return;
+
+        const wrongItem = appState.reviewQuestions[appState.reviewIndex];
+        const originalQuestion = questionBank.find(
+          (q) => q.id === wrongItem.id,
+        );
+        const isCorrect = appState.selectedOption === originalQuestion.answer;
+
+        appState.isAnswered = true;
+
+        // 更新UI
+        const selectedOptionEl = document.querySelector(
+          `#review-options-container .option[data-value="${appState.selectedOption}"]`,
+        );
+        if (selectedOptionEl) {
+          selectedOptionEl.classList.add(isCorrect ? "correct" : "incorrect");
+        }
+
+        // 如果回答错误，显示正确答案
+        if (!isCorrect) {
+          const correctOptionEl = document.querySelector(
+            `#review-options-container .option[data-value="${originalQuestion.answer}"]`,
+          );
+          if (correctOptionEl) {
+            correctOptionEl.classList.add("correct");
+          }
+        }
+
+        // 显示反馈
+        reviewFeedbackEl.textContent = isCorrect
+          ? `回答正确！${originalQuestion.explanation}`
+          : `回答错误！正确答案是${originalQuestion.answer}。${originalQuestion.explanation}`;
+        reviewFeedbackEl.className = isCorrect
+          ? "feedback correct"
+          : "feedback incorrect";
+        reviewFeedbackEl.style.display = "block";
+
+        // 更新按钮状态
+        reviewSubmitBtn.disabled = true;
+        reviewNextBtn.disabled = false;
+      }
+
+      // 下一道错题
+      function goToNextReviewQuestion() {
+        if (appState.reviewIndex < appState.reviewQuestions.length - 1) {
+          appState.reviewIndex++;
+          renderReviewQuestion();
+        } else {
+          alert("恭喜！您已经完成了所有错题重练！");
+        }
+      }
+
+      // 上一道错题
+      function goToPrevReviewQuestion() {
+        if (appState.reviewIndex > 0) {
+          appState.reviewIndex--;
+          renderReviewQuestion();
+        }
+      }
+
+      // 更新错题重练统计
+      function updateReviewStats() {
+        // 这里可以添加错题重练的统计信息
+        // 当前示例中暂不实现
+      }
+
+      // 开始考试模式
+      function startExamMode() {
+        // 重置考试状态
+        appState.examMode.isActive = true;
+        appState.examMode.timeLeft = appState.examMode.timeLimit;
+
+        // 重置用户答案
+        appState.userAnswers = Array(questionBank.length).fill(null);
+        appState.correctCount = 0;
+        appState.wrongCount = 0;
+        appState.answeredCount = 0;
+        appState.currentQuestionIndex = 0;
+
+        // 开始计时
+        if (appState.examMode.timer) {
+          clearInterval(appState.examMode.timer);
+        }
+
+        appState.examMode.timer = setInterval(() => {
+          appState.examMode.timeLeft--;
+
+          if (appState.examMode.timeLeft <= 0) {
+            clearInterval(appState.examMode.timer);
+            endExamMode();
+            alert("考试时间到！");
+          }
+        }, 1000);
+
+        renderQuestion();
+      }
+
+      // 结束考试模式
+      function endExamMode() {
+        appState.examMode.isActive = false;
+        clearInterval(appState.examMode.timer);
+
+        // 计算分数
+        const score = appState.correctCount;
+        const total = questionBank.length;
+        const percentage = Math.round((score / total) * 100);
+
+        alert(`考试结束！\n得分: ${score}/${total} (${percentage}%)`);
+      }
+
+      // 添加重置所有进度的函数
+      function resetAllProgress() {
+        if (
+          confirm(
+            "⚠️ 确定要重新开始吗？\n\n这将清空：\n• 所有答题记录\n• 统计数据（正确率、答题数等）\n• 错题本中的所有题目\n• 考试模式计时器\n\n此操作不可撤销！",
+          )
+        ) {
+          // 清空本地存储
+          localStorage.removeItem("aiTrainerAppState");
+
+          // 重置应用状态
+          appState.userAnswers = Array(questionBank.length).fill(null);
+          appState.correctCount = 0;
+          appState.wrongCount = 0;
+          appState.answeredCount = 0;
+          appState.wrongQuestions = [];
+          appState.reviewQuestions = [];
+          appState.currentQuestionIndex = 0;
+          appState.reviewIndex = 0;
+
+          // 如果当前是考试模式，停止计时器
+          if (appState.examMode.isActive && appState.examMode.timer) {
+            clearInterval(appState.examMode.timer);
+            appState.examMode.isActive = false;
+            appState.examMode.timeLeft = appState.examMode.timeLimit;
+          }
+
+          // 重新渲染当前题目
+          if (
+            appState.currentMode === "sequential" ||
+            appState.currentMode === "random" ||
+            appState.currentMode === "exam"
+          ) {
+            renderQuestion();
+          } else if (appState.currentMode === "review") {
+            renderReviewQuestion();
+          }
+
+          // 更新统计信息
+          updateStats();
+
+          // 更新错题本显示
+          updateWrongList();
+
+          // 更新重练统计
+          updateReviewStats();
+
+          // 显示成功提示
+          alert("✅ 已成功重置所有进度！\n\n现在可以从第一题重新开始练习了。");
+
+          // 如果当前在错题本或重练模式，切换到顺序练习
+          if (
+            appState.currentMode === "wrong" ||
+            appState.currentMode === "review"
+          ) {
+            setActiveTab("sequential");
+          }
+        }
+      }
+
+      // 初始化应用
+      window.addEventListener("DOMContentLoaded", initApp);
+    </script>
+  </body>
+</html>

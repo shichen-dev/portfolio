@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>贪吃蛇</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #222;
+        font-family: Arial;
+      }
+      canvas {
+        border: 2px solid #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="g" width="900" height="800"></canvas>
+    <script>
+      const c = document.getElementById("g"),
+        ctx = c.getContext("2d");
+      const S = 30,
+        N = 30;
+      let s = [[10, 10]],
+        d = [1, 0],
+        f = [5, 5],
+        score = 0;
+
+      document.onkeydown = (e) => {
+        const m = { 37: [-1, 0], 38: [0, -1], 39: [1, 0], 40: [0, 1] };
+        if (m[e.keyCode]) {
+          let [x, y] = m[e.keyCode];
+          if (x != -d[0] || y != -d[1]) d = [x, y];
+        }
+      };
+
+      setInterval(() => {
+        const h = [s[0][0] + d[0], s[0][1] + d[1]];
+        if (
+          h[0] < 0 ||
+          h[0] >= N ||
+          h[1] < 0 ||
+          h[1] >= N ||
+          s.some((p) => p[0] == h[0] && p[1] == h[1])
+        )
+          return (alert("得分:" + score), location.reload());
+        s.unshift(h);
+        if (h[0] == f[0] && h[1] == f[1]) {
+          score++;
+          f = [(Math.random() * N) | 0, (Math.random() * N) | 0];
+        } else s.pop();
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = "#4CAF50";
+        s.forEach(([x, y]) => ctx.fillRect(x * S, y * S, S - 1, S - 1));
+        ctx.fillStyle = "#FF5722";
+        ctx.fillRect(f[0] * S, f[1] * S, S - 1, S - 1);
+        ctx.fillStyle = "#fff";
+        ctx.font = "16px Arial";
+        ctx.fillText("Score:" + score, 5, 20);
+      }, 120);
+    </script>
+  </body>
+</html>
