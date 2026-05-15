@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI智能训练师五级答题（300题）</title>
+    <title>人工智能训练师5级题库</title>
     <style>
       * {
         margin: 0;
@@ -394,9 +394,9 @@
   <body>
     <div class="container">
       <header>
-        <h1>AI智能训练师五级答题（300题）</h1>
+        <h1>人工智能训练师五级答题 | 祝您好运</h1>
         <div class="subtitle">
-          基于AI智能训练师五级考试理论的答题训练系统
+          基于人工智能训练师五级考试理论的答题训练系统
           <button class="btn btn-danger" id="reset-btn">重新开始</button>
         </div>
       </header>
@@ -911,24 +911,27 @@
         // 更新按钮状态
         prevBtn.disabled = appState.currentQuestionIndex === 0;
       }
-
-      // 检查答案
-      function checkAnswer() {
-        // 打印 已选答案 和 答案对象
-        // console.log(appState.selectedOption);
-        // console.log(questionBank[appState.currentQuestionIndex]);
-        if (!appState.selectedOption || appState.isAnswered) return;
-
-        const question = questionBank[appState.currentQuestionIndex];
-
-        // 判断题的答案是 正确 或者 错误，目前题目传的是A B，需要做一些转换
-        // 如果是判断题就把A/B转换为 正确/错误
-        if (
+	  
+	  // 检查问题类型
+	  function checkQuestionType(question) {
+		// 判断题也是答得A、B，其中A-正确、B-错误
+		// 因此如果是判断题，将A、B转换为 正确、错误
+		if (
           JSON.stringify(question.options) === JSON.stringify(["正确", "错误"])
         ) {
           appState.selectedOption =
             appState.selectedOption === "A" ? "正确" : "错误";
         }
+	  }
+
+      // 检查答案
+      function checkAnswer() {
+        if (!appState.selectedOption || appState.isAnswered) return;
+
+        const question = questionBank[appState.currentQuestionIndex];
+		
+		// 检查问题类型
+		checkQuestionType(question);
 
         const isCorrect = appState.selectedOption === question.answer;
 
@@ -1156,6 +1159,8 @@
         const originalQuestion = questionBank.find(
           (q) => q.id === wrongItem.id,
         );
+		// 检查问题类型
+		checkQuestionType(originalQuestion);
         const isCorrect = appState.selectedOption === originalQuestion.answer;
 
         appState.isAnswered = true;

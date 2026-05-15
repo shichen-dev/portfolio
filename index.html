@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>个人作品集 | 前端小站</title>
+    <title>时辰的前端小站 | 作品集</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
     <style>
       * {
         margin: 0;
@@ -12,7 +17,13 @@
       }
       body {
         font-family: "Microsoft Yahei", sans-serif;
-        background: #f5f7fa;
+        /* background: #f5f7fa; */
+        /* 背景：浅灰 + CSS网格砖块效果 */
+        background-image:
+          linear-gradient(#e9ecef 1px, transparent 1px),
+          linear-gradient(90deg, #e9ecef 1px, transparent 1px);
+        /* 砖块大小 */
+        background-size: 22px 22px;
         padding: 40px 20px;
       }
       .container {
@@ -59,17 +70,53 @@
         .card-wrap {
           grid-template-columns: 1fr;
         }
+        .card {
+          padding: 20px 20px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+
+      /* 底部固定栏 */
+      .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 12px 0;
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.07);
+      }
+      .footer a {
+        color: #0066cc;
+        text-decoration: none;
+        margin: 0 6px;
+      }
+      .footer a:hover {
+        font-weight: 700;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="head">
-        <h1>个人前端作品集</h1>
-        <p>JS小工具 · 趣味小游戏 · 前端练习项目</p>
+        <h1>时辰的前端小站</h1>
+        <p>JS小工具 · 趣味小游戏 · 前端练习项目 · 题库</p>
       </div>
 
       <div class="card-wrap">
+        <!-- 题库入口 -->
+        <a href="./Portfolio/QuestionBank/index.html" class="card">
+          <h2>📘 题库</h2>
+          <p>人工智能训练师5级考题</p>
+        </a>
         <!-- 小工具入口 -->
         <a href="./Portfolio/Tools/index.html" class="card">
           <h2>🧰 实用小工具</h2>
@@ -81,6 +128,16 @@
           <p>贪吃蛇、2048、打地鼠等JS网页游戏</p>
         </a>
       </div>
+    </div>
+
+    <!-- 底部固定个人信息 -->
+    <div class="footer">
+      <a href="https://github.com/shichen-dev" target="_blank"
+        ><i class="bi bi-github"></i> Github</a
+      >
+      <a href="https://gitee.com/shichen-dev" target="_blank"
+        ><i class="bi bi-code-slash"></i> Gitee</a
+      >
     </div>
   </body>
 </html>
