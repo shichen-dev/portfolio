@@ -1,0 +1,109 @@
+/* ===== Bento 悬浮导航岛 ===== */
+.nav-fab-container {
+  position: fixed;
+  bottom: 24px; /* 离底部有一定距离，营造悬浮感 */
+  left: 50%;
+  transform: translateX(-50%); /* 水平居中 */
+  z-index: 9999;
+}
+
+.nav-fab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+
+  /* ✅ Bento 核心：毛玻璃 + 半透明背景 */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 999px; /* 胶囊形状 */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .nav-fab {
+  background: rgba(30, 30, 35, 0.65);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 按钮样式 */
+.nav-fab .nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text-sec);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-fab .nav-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+/* Hover / Active 状态 */
+.nav-fab .nav-btn:active,
+.nav-fab .nav-btn.active {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* 分隔线 */
+.nav-fab .divider {
+  width: 1px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .nav-fab .divider {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ✅ 移除旧的 body padding */
+body {
+  /* padding-bottom: 64px;  <- 删掉或注释掉 */
+}
+
+/* ===== 手机端响应式调整 (Bento 风格) ===== */
+@media (max-width: 640px) {
+  .nav-fab-container {
+    /* 1. 改变位置：从底部居中改为右侧悬浮 */
+    bottom: 50%;
+    right: 16px;
+    left: auto;
+    transform: translateY(50%); /* 垂直居中 */
+  }
+
+  .nav-fab {
+    /* 2. 改变布局：从横向 Flex 改为纵向 */
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 20px; /* 保持圆润的胶囊形 */
+  }
+
+  /* 3. 调整分隔线方向 */
+  .nav-fab .divider {
+    width: 60%;
+    height: 1px;
+    margin: 4px auto;
+  }
+
+  /* 4. 调整按钮大小，更适合手指点击 */
+  .nav-fab .nav-btn {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .nav-fab .nav-btn span {
+    display: none; /* 手机端隐藏文字，只保留图标（可选，看你喜欢） */
+  }
+}
