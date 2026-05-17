@@ -4,21 +4,11 @@
     <meta charset="UTF-8" />
     <title>时辰的前端小站</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./assets/css/index.css" />
     <script src="./assets/js/lucide.min.js"></script>
   </head>
 
   <body>
-    <input type="checkbox" id="theme-toggle" hidden />
-
-    <!-- 主题切换开关 -->
-    <label for="theme-toggle" class="theme-switch" aria-label="切换暗色模式">
-      <span class="icon sun"><i data-lucide="sun"></i></span>
-      <span class="icon moon"><i data-lucide="moon"></i></span>
-      <!-- 图标滑块 -->
-      <span class="knob"></span>
-    </label>
-
     <main class="bento">
       <!-- Hero -->
       <section class="card card--hero">
@@ -71,20 +61,10 @@
       </section>
     </main>
 
-    <script>
-      function initIcons() {
-        lucide.createIcons();
-      }
-
-      const toggle = document.getElementById("theme-toggle");
-      toggle.addEventListener("change", () => {
-        document.body.dataset.theme = toggle.checked ? "dark" : "light";
-        // 重新渲染
-        initIcons();
-      });
-
-      // 渲染图标
-      initIcons();
+    <!-- 主题 -->
+    <script type="module">
+      import { initThemeToggle } from "./assets/components/ThemeToggle.js";
+      initThemeToggle();
     </script>
   </body>
 </html>

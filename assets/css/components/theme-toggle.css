@@ -1,0 +1,90 @@
+/* 主题样式 */
+.theme-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+
+  width: 64px;
+  height: 32px;
+  border-radius: 999px;
+  background: #e5e5ea;
+  cursor: pointer;
+  display: flex;
+  /* align-items: center; */
+  padding: 4px;
+  transition: background 0.3s;
+}
+
+[data-theme="dark"] .theme-switch .moon i {
+  color: #e5e5e5;
+}
+
+/* 滑块 */
+.theme-switch .knob {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s;
+}
+
+.theme-switch .icon {
+  position: absolute;
+}
+
+.theme-switch .sun {
+  left: 12px;
+  opacity: 0;
+}
+
+.theme-switch .moon {
+  right: 12px;
+}
+
+/* 切换状态 */
+#theme-toggle:checked ~ .theme-switch {
+  background: #1c1c1e;
+}
+
+#theme-toggle:checked ~ .theme-switch .sun {
+  opacity: 1;
+}
+
+#theme-toggle:checked ~ .theme-switch .moon {
+  opacity: 0;
+}
+
+#theme-toggle:checked ~ .theme-switch .knob {
+  transform: translateX(32px);
+}
+
+.theme-switch i {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+}
+
+.theme-switch i:last-child {
+  opacity: 1;
+}
+
+#theme-toggle:checked ~ .theme-switch i:first-child {
+  opacity: 1;
+}
+#theme-toggle:checked ~ .theme-switch i:last-child {
+  opacity: 0;
+}
+
+/* ===== Dark Toggle ===== */
+#theme-toggle:checked ~ * {
+  --bg: #0b0f1a;
+  --card: rgba(255, 255, 255, 0.06);
+  --text: #e5e5e5;
+  --text-sec: #9ca3af;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
