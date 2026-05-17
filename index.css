@@ -1,13 +1,13 @@
-/* ===== 变量 ===== */
+/* ===== Design Tokens ===== */
 :root {
-  --bg: #f5f5f7;
-  --card: #ffffff;
-  --text: #1d1d1f;
-  --text-sec: #6b7280;
-  --text-ter: #9ca3af;
-  --accent: #6366f1;
-  --radius: 20px;
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --bg: #f5f5f7; /* 页面背景 token*/
+  --card: #ffffff; /* 卡片表面 token */
+  --text: #1d1d1f; /* 主文字 token */
+  --text-sec: #6b7280; /* 次级文字 token */
+  --text-ter: #9ca3af; /* 卡片副标题 token */
+  --accent: #6366f1; /* 品牌色 token */
+  --radius: 20px; /* 圆角 token */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.06); /* 阴影 token*/
 }
 
 /* ===== Dark ===== */

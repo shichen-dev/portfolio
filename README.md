@@ -1,37 +1,29 @@
-# 个人作品集
+# 🌐 时辰的前端小站
 
-#### 介绍
-JS小工具 · 趣味小游戏 · 前端练习项目
+一个**纯 HTML + CSS**实现的个人作品集站点，采用 **Bento Grid 布局**，整体风格偏向**克制高级感**。  
+页面包含题库、小工具、小游戏等模块，支持**暗色模式**与**入场动画**，适配桌面端与移动端。
 
-#### 软件架构
-软件架构说明
+🔗 **在线预览**  
+https://portfolio-7qg.pages.dev/
 
+---
 
-#### 安装教程
+## ✨ 项目亮点
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- 🧩 **Bento Grid 布局**：信息密度高、视觉层级清晰
+- 🌗 **明暗双主题**：CSS 变量 + 纯 CSS 暗色模式切换
+- 🎞 **入场动画**：卡片依次淡入，提升交互质感
+- 🧠 **内容模块**：
+  - 📚 题库：AI训练师
+  - 🧰 小工具：文字样式列表
+  - 🎮 小游戏：石头剪刀布
 
-#### 使用说明
+---
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## 🛠 技术栈
 
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- HTML / CSS
+- CSS Grid
+- CSS Variables
+- Lucide Icons
+- Cloudflare Pages 部署
