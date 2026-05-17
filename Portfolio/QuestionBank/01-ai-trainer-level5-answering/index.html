@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>人工智能训练师5级题库</title>
+    <link rel="stylesheet" href="../../../assets/css/common.css" />
+    <script src="../../../assets/js/lucide.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -911,27 +913,27 @@
         // 更新按钮状态
         prevBtn.disabled = appState.currentQuestionIndex === 0;
       }
-	  
-	  // 检查问题类型
-	  function checkQuestionType(question) {
-		// 判断题也是答得A、B，其中A-正确、B-错误
-		// 因此如果是判断题，将A、B转换为 正确、错误
-		if (
+
+      // 检查问题类型
+      function checkQuestionType(question) {
+        // 判断题也是答得A、B，其中A-正确、B-错误
+        // 因此如果是判断题，将A、B转换为 正确、错误
+        if (
           JSON.stringify(question.options) === JSON.stringify(["正确", "错误"])
         ) {
           appState.selectedOption =
             appState.selectedOption === "A" ? "正确" : "错误";
         }
-	  }
+      }
 
       // 检查答案
       function checkAnswer() {
         if (!appState.selectedOption || appState.isAnswered) return;
 
         const question = questionBank[appState.currentQuestionIndex];
-		
-		// 检查问题类型
-		checkQuestionType(question);
+
+        // 检查问题类型
+        checkQuestionType(question);
 
         const isCorrect = appState.selectedOption === question.answer;
 
@@ -1159,8 +1161,8 @@
         const originalQuestion = questionBank.find(
           (q) => q.id === wrongItem.id,
         );
-		// 检查问题类型
-		checkQuestionType(originalQuestion);
+        // 检查问题类型
+        checkQuestionType(originalQuestion);
         const isCorrect = appState.selectedOption === originalQuestion.answer;
 
         appState.isAnswered = true;
@@ -1328,5 +1330,6 @@
       // 初始化应用
       window.addEventListener("DOMContentLoaded", initApp);
     </script>
+    <script src="../../../assets/components/nav.js"></script>
   </body>
 </html>
