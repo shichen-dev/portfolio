@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS 字体速查表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ✅ Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;700&family=Lobster&family=Anton&family=Bebas+Neue&family=Dancing+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --font-preview-cn: 36px;
+        --font-preview-en: 20px;
+        --header-h: 56px;
+        --content-w: 960px;
+      }
+
+      body {
+        margin: 0;
+        padding: calc(var(--header-h) + 24px) 24px 48px;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+
+      /* ✅ 居中容器 */
+      .container {
+        max-width: var(--content-w);
+        margin: 0 auto;
+      }
+
+      header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: var(--header-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        background: var(--card);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        z-index: 10;
+      }
+
+      header h1 {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+
+      .search-input,
+      .btn {
+        height: 40px;
+        padding: 0 14px;
+        font-size: 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: var(--card);
+        color: var(--text);
+      }
+
+      .btn:hover {
+        border-color: var(--accent);
+      }
+
+      .search-input {
+        flex: 1;
+        min-width: 220px;
+      }
+
+      .group {
+        margin-top: 36px;
+      }
+
+      .group-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-sec);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* ✅ 不顶满、呼吸感 */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 14px;
+      }
+
+      .item {
+        padding: 20px;
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .item:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .preview {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 10px;
+      }
+
+      .cn {
+        font-size: var(--font-preview-cn);
+        font-weight: 500;
+        line-height: 1.3;
+      }
+
+      .en {
+        font-size: var(--font-preview-en);
+        color: var(--text-sec);
+        letter-spacing: 0.05em;
+        font-weight: 500;
+      }
+
+      .usage {
+        font-size: 12px;
+        color: var(--text-ter);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .badge {
+        padding: 1px 6px;
+        font-size: 11px;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.06);
+        color: var(--text-sec);
+      }
+
+      .warn {
+        background: rgba(255, 180, 0, 0.15);
+        color: #b45309;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: var(--bg);
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        z-index: 20;
+      }
+
+      .toast.show {
+        opacity: 1;
+      }
+
+      .show-more {
+        margin-top: 32px;
+        padding: 10px 0;
+        font-size: 13px;
+        color: var(--text-ter);
+        cursor: pointer;
+        user-select: none;
+        width: fit-content; /* ✅ 关键 */
+      }
+
+      .show-more:hover {
+        color: var(--text-ter);
+      }
+
+      #extraPanel {
+        display: none;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: calc(var(--header-h) + 16px) 16px 36px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        :root {
+          --font-preview-cn: 30px;
+          --font-preview-en: 17px;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/pages/Tools/01-font-query-B5SBE7bx.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+  </head>
+
+  <body data-theme="light">
+    <header>
+      <h1>CSS 字体速查表</h1>
+    </header>
+
+    <div class="container">
+      <div id="nav-selector"></div>
+      <div class="controls">
+        <input
+          class="search-input"
+          id="searchInput"
+          placeholder="搜索字体或 CSS"
+        />
+        <button class="btn" id="resetBtn">重置</button>
+      </div>
+
+      <section class="group">
+        <div class="group-title">正文 / UI</div>
+        <div class="grid" id="ui"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-title">思源宋体</div>
+        <div class="grid" id="serif"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-title">个性英文</div>
+        <div class="grid" id="fancyEn"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-title">系统私有字体</div>
+        <div class="grid" id="legacy"></div>
+      </section>
+
+      <section class="group" id="extraPanel">
+        <div class="group-title">扩展字体</div>
+        <div class="grid" id="extra"></div>
+      </section>
+
+      <div class="show-more" id="toggleMore">显示更多字体 ▾</div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const groupsData = {
+        ui: [
+          {
+            label: "System UI",
+            css: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          },
+          { label: "思源黑体 CN", css: '"Noto Sans SC", sans-serif' },
+        ],
+        serif: [{ label: "思源宋体 CN", css: '"Noto Serif SC", serif' }],
+        fancyEn: [
+          { label: "Lobster", css: '"Lobster", cursive' },
+          { label: "Anton", css: '"Anton", sans-serif' },
+          { label: "Bebas Neue", css: '"Bebas Neue", sans-serif' },
+          { label: "Dancing Script", css: '"Dancing Script", cursive' },
+        ],
+        legacy: [
+          {
+            label: "楷体 (KaiTi)",
+            css: '"KaiTi", "STKaiti", "SimSun", serif',
+            warn: false,
+          },
+          {
+            label: "隶书 (LiSu)",
+            css: '"LiSu", "STLiti", "SimSun", serif',
+            warn: true,
+          },
+          { label: "华文彩云", css: '"STCaiyun", fantasy', warn: true },
+          { label: "华文琥珀", css: '"STHupo", fantasy', warn: true },
+          {
+            label: "华文中宋",
+            css: '"STZhongsong", "SimSun", serif',
+            warn: false,
+          },
+        ],
+        extra: [
+          { label: "Arial", css: '"Arial", sans-serif' },
+          {
+            label: "Helvetica Neue",
+            css: '"Helvetica Neue", "Arial", sans-serif',
+          },
+        ],
+      };
+
+      const toast = document.getElementById("toast");
+
+      function render(groupId, list) {
+        const c = document.getElementById(groupId);
+        c.innerHTML = "";
+        list.forEach((f) => {
+          const el = document.createElement("div");
+          el.className = "item";
+          el.style.fontFamily = f.css;
+
+          let previewText = "时辰";
+          if (f.warn) {
+            previewText = f.label.includes("隶书")
+              ? "隶书"
+              : f.label.includes("彩云")
+                ? "彩云"
+                : f.label.includes("琥珀")
+                  ? "琥珀"
+                  : "示例";
+          }
+
+          el.innerHTML = `
+          <div class="preview">
+            <span class="cn">${previewText}</span>
+            <span class="en">SHICHEN</span>
+          </div>
+          <div class="usage">
+            ${f.label}
+            ${f.warn ? '<span class="badge warn">⚠️ 非全编码</span>' : ""}
+          </div>
+        `;
+          el.onclick = () => copy(`font-family: ${f.css};`);
+          c.appendChild(el);
+        });
+      }
+
+      function copy(txt) {
+        navigator.clipboard.writeText(txt);
+        toast.textContent = "已复制：" + txt;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1200);
+      }
+
+      Object.keys(groupsData).forEach((k) => render(k, groupsData[k]));
+
+      document.getElementById("searchInput").oninput = (e) => {
+        const k = e.target.value.toLowerCase();
+        Object.keys(groupsData).forEach((g) =>
+          render(
+            g,
+            groupsData[g].filter(
+              (f) =>
+                f.label.toLowerCase().includes(k) ||
+                f.css.toLowerCase().includes(k),
+            ),
+          ),
+        );
+      };
+
+      document.getElementById("resetBtn").onclick = () => {
+        document.getElementById("searchInput").value = "";
+        Object.keys(groupsData).forEach((g) => render(g, groupsData[g]));
+      };
+
+      document.getElementById("toggleMore").onclick = () => {
+        const p = document.getElementById("extraPanel");
+        const show = p.style.display === "none";
+        p.style.display = show ? "block" : "none";
+        document.getElementById("toggleMore").textContent = show
+          ? "收起扩展字体 ▴"
+          : "显示更多字体 ▾";
+      };
+    </script>
+
+    <!-- ✅ theme-toggle 初始化（假设 common.js 提供） -->
+  </body>
+</html>

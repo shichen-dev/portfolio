@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>关于 | 时辰的前端小站</title>
+    <style>
+      body {
+        --max-width: 700px;
+      }
+      .page-container {
+        max-width: 740px;
+        margin: 0 auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px; /* ✅ 卡片间距 */
+      }
+
+      /* ===== 个人名片 ===== */
+      .page-container > .card:first-child {
+        text-align: center;
+        padding: 48px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--card) 0%,
+          color-mix(in srgb, var(--accent) 8%, transparent) 100%
+        );
+        border-radius: 20px;
+      }
+
+      .page-container img[alt="Shichen Avatar"] {
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        border: 4px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+      }
+
+      .page-container h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: var(--text);
+      }
+
+      .page-container p {
+        font-size: 1.05rem;
+        color: var(--text-sec);
+        line-height: 1.8;
+      }
+
+      /* ===== 卡片通用 ===== */
+      .card {
+        padding: 28px 24px;
+        border-radius: 16px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .card h2 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text);
+      }
+
+      /* ===== 技能标签 ===== */
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .skill-tag {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 15%, transparent);
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+
+      .skill-tag:hover {
+        transform: translateY(-2px);
+        background: color-mix(in srgb, var(--accent) 25%, transparent);
+      }
+
+      /* ===== 联系方式 ===== */
+      .page-container .card:last-child a {
+        text-decoration: none;
+        font-size: 1.6rem;
+        color: var(--text-sec);
+        transition:
+          color 0.2s,
+          transform 0.2s;
+      }
+
+      .page-container .card:last-child a:hover {
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      .links {
+        position: relative;
+        display: flex;
+        gap: 8px;
+      }
+      .links a {
+        text-decoration: none;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/about-B3QiXKRS.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+  </head>
+  <body>
+    <!-- Main Content：这里是你要的“介绍我自己”的内容 -->
+    <main class="page-container">
+      <!-- 1. 个人名片区域 -->
+      <section class="card" style="text-align: center; padding: 40px 20px">
+        <img src="/assets/images/icon.png" alt="Shichen Avatar" />
+        <h1>时辰</h1>
+        <p>拥抱 AI · 探索未来</p>
+      </section>
+
+      <!-- 2. 关于我：自我介绍正文 -->
+      <section class="card">
+        <h2
+          style="
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          "
+        >
+          关于我
+        </h2>
+        <p>
+          你好，我是时辰。一名热衷于技术与创造的前端开发者，
+          目前正在深入探索人工智能与 Web 开发的结合方式。
+        </p>
+        <p>
+          在这个站点里，我记录自己的学习与实践， 也会分享一些实用工具和想法。
+          如果你对我的项目感兴趣，或者有合作机会，欢迎随时联系我。
+        </p>
+      </section>
+
+      <!-- 3. 技能栈：展示技术能力 -->
+      <section class="card">
+        <h2>技术栈</h2>
+        <div class="skill-tags">
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Vue</span>
+          <span class="skill-tag">Tailwind CSS</span>
+          <span class="skill-tag">Cloudflare Pages</span>
+        </div>
+      </section>
+
+      <!-- 4. 联系方式 -->
+      <section class="card">
+        <h2>联系我</h2>
+        <div class="links">
+          <a
+            href="https://github.com/shichen-dev"
+            title="GitHub"
+            target="_blank"
+          >
+            <i data-lucide="git-branch"></i>
+            GitHub
+          </a>
+          &nbsp;
+          <a
+            href="mailto:1978890858@qq.com"
+            title="Email"
+            onclick="
+              setTimeout(() => {
+                alert('未打开邮件？请手动发送至 1978890858@qq.com');
+              }, 1000)
+            "
+          >
+            <i data-lucide="mail"></i>
+            邮箱
+          </a>
+          <div id="exit-button-selector"></div>
+        </div>
+      </section>
+    </main>
+
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>UUID 生成器</title>
+    <script type="module" crossorigin src="/assets/js/pages/Tools/04-uuid-generator-BbkaaK9z.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/04-uuid-generator-BHJb9sAI.css">
+  </head>
+
+  <body>
+    <div id="app-header"></div>
+
+    <div class="container">
+      <h2>UUID 生成器</h2>
+
+      <div id="toast" class="toast">UUID 已复制到剪贴板</div>
+
+      <div class="row">
+        <label>UUID 版本</label>
+        <select id="version">
+          <option value="4">UUID v4（随机）</option>
+          <option value="7">UUID v7（时间 + 随机）</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>UUID 结果</label>
+        <div class="uuid-box">
+          <span id="uuid" class="uuid"></span>
+          <button class="btn-secondary" id="copy-btn">复制</button>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-primary" id="regenerate-btn">重新生成</button>
+      </div>
+
+      <p class="hint">切换版本或刷新页面会自动生成新的 UUID</p>
+      <div id="exit-button-selector"></div>
+    </div>
+
+  </body>
+</html>

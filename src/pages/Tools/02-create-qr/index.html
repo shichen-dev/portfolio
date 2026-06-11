@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>二维码生成器</title>
+
+    <script src="/js/qrcode.min.js"></script>
+    <script src="/js/jszip.min.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text-main);
+        padding: 24px 14px;
+        min-height: 100vh;
+        --max-width: 700px;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 22px 18px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        position: relative;
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 22px;
+        letter-spacing: -0.3px;
+        color: var(--text);
+      }
+
+      .row {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: var(--text-sub);
+        font-weight: 500;
+      }
+
+      .desc {
+        color: var(--text-ter);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 14px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #fafafa;
+        font-size: 15px;
+        color: var(--text-main);
+        outline: none;
+        appearance: none;
+      }
+
+      input:focus {
+        border-color: var(--accent);
+      }
+
+      .file-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .file-button {
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+
+      .file-button:hover {
+        background: #e5e7eb;
+      }
+
+      .file-name {
+        font-size: 13px;
+        word-break: break-all;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .style-box {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      @media (max-width: 520px) {
+        .style-box {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .style-item {
+        padding: 12px 6px;
+        text-align: center;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        font-size: 13px;
+        cursor: pointer;
+        background: #fafafa;
+        transition: all 0.2s;
+        user-select: none;
+      }
+
+      .style-item.active {
+        border-color: var(--accent);
+        background: #eef2ff;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      @media (max-width: 520px) {
+        .btn-group {
+          flex-direction: column;
+        }
+      }
+
+      button {
+        flex: 1;
+        padding: 14px;
+        border-radius: 999px;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn-gen {
+        background: var(--accent);
+        color: white;
+      }
+
+      .btn-gen:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-down {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      .btn-down:hover {
+        background: #e5e7eb;
+      }
+
+      /* ✅ 只改这里：防止生成二维码后出现滚动条 */
+      #qrcode-box {
+        margin-top: 26px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      #qrcode-box canvas {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      }
+
+      #logo-preview {
+        max-width: 64px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/pages/Tools/02-create-qr-B5SBE7bx.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>二维码生成器</h2>
+
+      <div class="row">
+        <label class="desc">网址（无需 https://）</label>
+        <input type="text" id="urlInput" placeholder="shichen.pages.dev" />
+      </div>
+
+      <div class="row">
+        <label class="desc">二维码样式</label>
+        <div class="style-box">
+          <div class="style-item active" data-style="1">经典方块</div>
+          <div class="style-item" data-style="2">圆润圆点</div>
+          <div class="style-item" data-style="3">渐变炫彩</div>
+          <div class="style-item" data-style="4">沉稳商务</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="desc">中心 Logo（可选）</label>
+        <div class="file-wrap">
+          <label class="file-button" for="logoFile">选择图片</label>
+          <span class="file-name desc" id="fileName">未选择文件</span>
+          <input type="file" id="logoFile" accept="image/*" />
+        </div>
+        <img id="logo-preview" style="display: none" />
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-gen" onclick="createQr()">生成二维码</button>
+        <button class="btn-down" onclick="downloadQr()">下载二维码</button>
+      </div>
+
+      <div id="qrcode-box"></div>
+      <div id="exit-button-selector"></div>
+    </div>
+    <script>
+      let nowStyle = 1;
+      let logoImg = null;
+      const qrBox = document.getElementById("qrcode-box");
+      const fileName = document.getElementById("fileName");
+
+      document.querySelectorAll(".style-item").forEach((item) => {
+        item.onclick = () => {
+          document
+            .querySelectorAll(".style-item")
+            .forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
+          nowStyle = +item.dataset.style;
+        };
+      });
+
+      document.getElementById("logoFile").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        fileName.textContent = file.name;
+        const r = new FileReader();
+        r.onload = (ev) => {
+          logoImg = ev.target.result;
+          const pre = document.getElementById("logo-preview");
+          pre.src = logoImg;
+          pre.style.display = "block";
+        };
+        r.readAsDataURL(file);
+      });
+
+      async function createQr() {
+        let url = document.getElementById("urlInput").value.trim();
+        if (!url) return alert("请输入网址");
+        if (!url.startsWith("http")) url = "https://" + url;
+
+        qrBox.innerHTML = "";
+        const canvas = document.createElement("canvas");
+        qrBox.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        canvas.width = 300;
+        canvas.height = 300;
+
+        await QRCode.toCanvas(canvas, url, {
+          width: 300,
+          margin: 1,
+          color: { dark: "#000000", light: "#ffffff" },
+        });
+
+        switch (nowStyle) {
+          case 1:
+            drawClassic(canvas, ctx);
+            break;
+          case 2:
+            drawRound(canvas, ctx);
+            break;
+          case 3:
+            drawGradient(canvas, ctx);
+            break;
+          case 4:
+            drawBusiness(canvas, ctx);
+            break;
+        }
+
+        if (logoImg) {
+          const img = new Image();
+          img.onload = () => {
+            const s = 56;
+            ctx.drawImage(
+              img,
+              canvas.width / 2 - s / 2,
+              canvas.height / 2 - s / 2,
+              s,
+              s,
+            );
+          };
+          img.src = logoImg;
+        }
+      }
+
+      /* ===== 原风格（完全不动） ===== */
+      function drawClassic(canvas, ctx) {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#2563eb";
+        drawPixels(canvas, ctx, d, (x, y, s) =>
+          ctx.fillRect(x, y, s - 1, s - 1),
+        );
+      }
+      function drawRound(canvas, ctx) {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#10b981";
+        drawPixels(canvas, ctx, d, (x, y, s) => {
+          ctx.beginPath();
+          ctx.arc(x + s / 2, y + s / 2, s / 2 - 0.4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+      function drawBusiness(canvas, ctx) {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#18181b";
+        drawPixels(canvas, ctx, d, (x, y, s) => ctx.fillRect(x, y, s, s));
+      }
+
+      /* ✅ 顶级炫彩 */
+      function drawGradient(canvas, ctx) {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const w = canvas.width,
+          h = canvas.height;
+        const palettes = [
+          { a: "#00ffff", b: "#8b5cf6", c: "#0f172a" },
+          { a: "#f472b6", b: "#facc15", c: "#1e1b4b" },
+          { a: "#38bdf8", b: "#f43f5e", c: "#020617" },
+          { a: "#a855f7", b: "#22d3ee", c: "#0c0a09" },
+        ];
+        const p = palettes[Math.floor(Math.random() * palettes.length)];
+
+        const g1 = ctx.createLinearGradient(0, 0, w, h);
+        g1.addColorStop(0, p.a);
+        g1.addColorStop(1, p.c);
+
+        const g2 = ctx.createLinearGradient(w, 0, 0, h);
+        g2.addColorStop(0, p.b);
+        g2.addColorStop(1, p.c);
+
+        ctx.fillStyle = g1;
+        drawPixels(canvas, ctx, d, (x, y, s) =>
+          ctx.fillRect(x, y, s - 1, s - 1),
+        );
+
+        ctx.globalCompositeOperation = "lighter";
+        ctx.fillStyle = g2;
+        drawPixels(canvas, ctx, d, (x, y, s) =>
+          ctx.fillRect(x, y, s - 1, s - 1),
+        );
+        ctx.globalCompositeOperation = "source-over";
+      }
+
+      function drawPixels(canvas, ctx, data, cb) {
+        const s = 4;
+        for (let y = 0; y < canvas.height; y += s)
+          for (let x = 0; x < canvas.width; x += s)
+            if (data[(y * canvas.width + x) * 4] < 100) cb(x, y, s);
+      }
+
+      function downloadQr() {
+        const canvas = qrBox.querySelector("canvas");
+        if (!canvas) return alert("请先生成二维码");
+        const a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = "二维码.png";
+        a.click();
+      }
+    </script>
+  </body>
+</html>

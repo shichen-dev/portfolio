@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI训练师五级题库</title>
+    <script type="module" crossorigin src="/assets/js/pages/QuestionBank/02-ai-trainer-level5-answering-FA5rXGNN.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/02-ai-trainer-level5-answering-WgtYElO3.css">
+  </head>
+  <body>
+    <div id="nav-selector"></div>
+    <div class="container">
+      <header>
+        <h1>AI训练师五级</h1>
+        <div class="subtitle">
+          AI训练师五级考试理论答题训练系统
+          <button class="btn btn-danger" id="reset-btn">重新开始</button>
+        </div>
+      </header>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="sequential">顺序练习</button>
+        <button class="tab" data-tab="random">随机练习</button>
+        <button class="tab" data-tab="exam">模拟考试</button>
+        <button class="tab" data-tab="wrong">错题本</button>
+        <button class="tab" data-tab="review">错题重练</button>
+      </div>
+
+      <!-- 顺序练习模式 -->
+      <div class="main-content" id="sequential-mode">
+        <div class="question-container">
+          <div class="question-header">
+            <div class="question-number">题目 1 / 300</div>
+            <!-- <div class="question-type">单选题</div> -->
+          </div>
+
+          <div class="question-text" id="question-text">
+            LabelMe提供哪些类型的标注工具?
+          </div>
+
+          <div class="options-container" id="options-container">
+            <div class="option" data-value="A">
+              <div class="option-label">A</div>
+              <div class="option-text">矩形框和多边形</div>
+            </div>
+            <div class="option" data-value="B">
+              <div class="option-label">B</div>
+              <div class="option-text">点和线</div>
+            </div>
+            <div class="option" data-value="C">
+              <div class="option-label">C</div>
+              <div class="option-text">矩形框、多边形、点和线</div>
+            </div>
+            <div class="option" data-value="D">
+              <div class="option-label">D</div>
+              <div class="option-text">以上都不是</div>
+            </div>
+          </div>
+
+          <div class="feedback" id="feedback"></div>
+
+          <div class="button-container">
+            <button class="btn btn-secondary" id="prev-btn">上一题</button>
+            <div class="btn-primary-group">
+              <button class="btn btn-primary" id="submit-btn" disabled>
+                确定答案
+              </button>
+              <button class="btn btn-primary" id="next-btn" disabled>
+                下一题
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-label">正确率</div>
+            <div class="stat-value" id="accuracy-rate">0%</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">已答/总数</div>
+            <div class="stat-value" id="answered-count">0/300</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">正确数</div>
+            <div class="stat-value" id="correct-count">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">错误数</div>
+            <div class="stat-value" id="wrong-count">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 错题本模式 -->
+      <div class="main-content wrong-list-container" id="wrong-mode">
+        <div class="wrong-list-header">
+          <div class="wrong-list-title">我的错题本</div>
+          <div class="wrong-list-count">
+            共 <span id="wrong-count-badge">0</span> 题
+          </div>
+        </div>
+
+        <div class="wrong-list" id="wrong-list">
+          <!-- 错题列表将通过JavaScript动态生成 -->
+          <div style="text-align: center; padding: 40px 20px; color: #7f8c8d">
+            暂无错题记录，快去练习吧！
+          </div>
+        </div>
+
+        <div class="button-container" style="margin-top: 20px">
+          <button class="btn btn-secondary" id="clear-wrong-btn">
+            清空错题本
+          </button>
+          <button class="btn btn-primary" id="start-review-btn">
+            开始重练
+          </button>
+        </div>
+      </div>
+
+      <!-- 错题重练模式 -->
+      <div class="main-content wrong-list-container" id="review-mode">
+        <div class="question-container">
+          <div class="question-header">
+            <div class="question-number">错题重练 1 / 0</div>
+            <!-- <div class="question-type">单选题</div> -->
+          </div>
+
+          <div class="question-text" id="review-question-text">暂无错题</div>
+
+          <div class="options-container" id="review-options-container">
+            <div class="option" data-value="A">
+              <div class="option-label">A</div>
+              <div class="option-text">选项A</div>
+            </div>
+            <div class="option" data-value="B">
+              <div class="option-label">B</div>
+              <div class="option-text">选项B</div>
+            </div>
+            <div class="option" data-value="C">
+              <div class="option-label">C</div>
+              <div class="option-label">C</div>
+              <div class="option-text">选项C</div>
+            </div>
+            <div class="option" data-value="D">
+              <div class="option-label">D</div>
+              <div class="option-text">选项D</div>
+            </div>
+          </div>
+
+          <div class="feedback" id="review-feedback"></div>
+
+          <div class="button-container">
+            <button class="btn btn-secondary" id="review-prev-btn">
+              上一题
+            </button>
+            <div>
+              <button class="btn btn-primary" id="review-submit-btn" disabled>
+                确定答案
+              </button>
+              <button class="btn btn-primary" id="review-next-btn" disabled>
+                下一题
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-label">正确率</div>
+            <div class="stat-value" id="review-accuracy-rate">0%</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">已答/总数</div>
+            <div class="stat-value" id="review-answered-count">0/0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">正确数</div>
+            <div class="stat-value" id="review-correct-count">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">错误数</div>
+            <div class="stat-value" id="review-wrong-count">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

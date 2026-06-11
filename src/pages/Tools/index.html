@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>工具 | 时辰的前端小站</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial;
+        background: var(--bg);
+        color: var(--text);
+        padding: 40px 20px;
+        transition:
+          background 0.3s,
+          color 0.3s;
+        --max-width: 700px;
+      }
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: inherit;
+      }
+      h1 svg {
+        /* stroke: var(--accent); */
+        width: 28px;
+        height: 28px;
+      }
+      .item {
+        background: var(--card);
+        padding: 18px 20px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow);
+        text-decoration: none;
+        display: block;
+        color: inherit;
+      }
+      .item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+        border-color: rgba(99, 102, 241, 0.25);
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/pages/Tools-DtMU8tsC.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+  </head>
+  <body>
+    <div id="nav-selector"></div>
+    <div class="container">
+      <h1><i data-lucide="wrench"></i> 工具</h1>
+
+      <!-- 你只需要在这里加项目，一行一个！ -->
+      <a href="/src/pages/Tools/01-font-query/index.html" class="item"
+        >字体查询</a
+      >
+      <a href="/src/pages/Tools/02-create-qr/index.html" class="item"
+        >二维码生成器</a
+      >
+      <a href="/src/pages/Tools/03-img-tools/index.html" class="item"
+      >图片压缩</a>
+      <a href="/src/pages/Tools/04-uuid-generator/index.html" class="item"
+        >UUID生成器</a
+      >
+    </div>
+
+  </body>
+</html>

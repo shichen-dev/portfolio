@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片压缩工具</title>
+    <script type="module" crossorigin src="/assets/js/pages/Tools/03-img-tools-1FX7ezXt.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.Dli0lZ85.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/03-img-tools-h0HEhvDX.css">
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <div class="container">
+      <h1>图片压缩工具</h1>
+      <div class="sub">
+        支持批量处理，仅保留体积减小的图片
+      </div>
+
+      <div class="upload-area" id="dropZone">
+        <div>点击或拖拽图片到此处</div>
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          accept="image/jpeg,image/png,image/webp"
+          style="display: none"
+        />
+      </div>
+
+      <div class="file-list" id="fileList">
+        尚未选择图片
+      </div>
+
+      <div class="settings">
+        <div class="setting-group">
+          <label>最大宽度（px）</label>
+          <input type="number" id="maxWidth" value="1200" step="100" />
+        </div>
+        <div class="setting-group">
+          <label>压缩质量</label>
+          <select id="quality">
+            <option value="0.9">90%（轻度）</option>
+            <option value="0.7" selected>70%（推荐）</option>
+            <option value="0.5">50%（中等）</option>
+            <option value="0.3">30%（重度）</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label>文件名前缀</label>
+          <input type="text" id="prefix" placeholder="可选" />
+        </div>
+      </div>
+
+      <button class="btn" id="processBtn">
+        开始压缩
+      </button>
+
+      <div id="progressArea" style="display: none; margin-top: 12px">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="statusText" style="font-size: 12px; margin-top: 6px">
+          处理中...
+        </div>
+      </div>
+
+      <div class="result-area" id="resultArea">
+        等待操作
+      </div>
+      <div id="exit-button-selector"></div>
+    </div>
+
+  </body>
+</html>

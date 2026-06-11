@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>给最爱的你 💕 | 专属小惊喜</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="module" crossorigin src="/assets/js/pages/Design//Card/01-surprise-for-wife-C5t23Eg6.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/01-surprise-for-wife-CJ_JgwaF.css">
+  </head>
+  <body>
+    <!-- 背景音乐 -->
+    <button class="music-btn" id="music-btn">🎵</button>
+    <audio id="bgm" loop>
+      <source src="/audio/product_tech.mp3" />
+    </audio>
+
+    <!-- 花瓣画布 -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- 烟花画布 -->
+    <canvas id="fireworks-canvas"></canvas>
+
+    <!-- 修复问题2：半黑透明遮罩（初始隐藏） -->
+    <div class="dark-overlay" id="darkOverlay"></div>
+
+    <!-- 修复问题1：优化的焦点遮罩 -->
+    <div class="focus-overlay" id="focusOverlay">
+      <div class="focus-text">💌 给最爱的你</div>
+    </div>
+
+    <!-- 心里话容器 -->
+    <div class="blessings-container" id="blessingsContainer"></div>
+
+    <!-- 主容器 -->
+    <div class="container">
+      <div class="title">
+        <h1>💌 媳妇儿的专属小惊喜 💌</h1>
+        <p>点击信封，让心意在屏幕上流淌...</p>
+      </div>
+
+      <!-- 信封容器 -->
+      <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope">
+          <div class="envelope-flap"></div>
+        </div>
+
+        <!-- 卡片 -->
+        <div class="card" id="card">
+          <h2>💕 亲爱的老婆</h2>
+          <div class="card-content" id="cardContent">
+            520的匆忙让我心有愧疚<br /><br />
+            有些话，我想用特别的方式告诉你<br /><br />
+            请点击信封...
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作指引 -->
+      <div class="instructions" id="instructions">
+        点击信封，开启我的心意...
+      </div>
+    </div>
+  </body>
+</html>
