@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>诗词文</title>
+  <script type="module" crossorigin src="/assets/js/pages/Study/04-recite-yuwen-9-CKvnkSoZ.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+  <link rel="stylesheet" crossorigin href="/assets/css/04-recite-yuwen-9-BBIfbr2N.css">
+</head>
+<body>
+
+<!-- 正文区 -->
+<main class="stage" id="stage"></main>
+
+<!-- 右下角状态圆点 -->
+<button class="status-dot" id="statusDot" aria-label="背诵状态"></button>
+
+<!-- 状态选择浮层 -->
+<div class="status-pop" id="statusPop">
+  <button class="status-pop-item" data-status="">未检查</button>
+  <button class="status-pop-item" data-status="not_yet">还没背过</button>
+  <button class="status-pop-item" data-status="reviewing">正在练习</button>
+  <button class="status-pop-item" data-status="mastered">已背熟</button>
+</div>
+
+<!-- 易错提示浮层 -->
+<div class="tip-pop" id="tipPop"></div>
+
+<!-- 底部操作条（默认收起） -->
+<nav class="bottombar" id="bottombar"></nav>
+
+<!-- 遮罩 -->
+<div class="overlay" id="overlay"></div>
+
+<!-- 全屏目录 -->
+<div class="drawer drawer-full" id="drawerList">
+  <header class="drawer-head">
+    <h3>篇目目录</h3>
+    <button class="drawer-close" data-close>✕</button>
+  </header>
+  <div class="drawer-progress">
+    <div class="progress-bar" id="listProgressBar"></div>
+  </div>
+  <p class="drawer-progress-text" id="listProgressText"></p>
+  <div class="drawer-body" id="listBody"></div>
+</div>
+
+</body>
+</html>

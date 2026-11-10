@@ -1,0 +1,1 @@
+import"../../chunks/modulepreload-polyfill.Dezn_h7o.js";import{t as e}from"../../chunks/main.CcBe2Onj.js";/* empty css                                                  */document.body.prepend(e());

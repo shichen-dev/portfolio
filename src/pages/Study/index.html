@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学习 | 时辰的前端小站</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial;
+        background: var(--bg);
+        color: var(--text);
+        padding: 40px 20px;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .container {
+        max-width: var(--max-width, 700px);
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: inherit;
+      }
+      h1 svg {
+        width: 28px;
+        height: 28px;
+      }
+      .modules-grid .card {
+        width: auto;
+        height: auto;
+      }
+      .module-card {
+        margin-bottom: 16px;
+      }
+      .module-links {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        align-items: start;
+      }
+      .module-link {
+        padding: 18px 20px;
+      }
+      .modules-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        align-items: start;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/pages/Study-D6Tvv8cr.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/lucide.BSA8f3RJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.CcBe2Onj.js">
+  </head>
+  <body>
+    <div id="nav-selector"></div>
+    <div class="container">
+      <h1><i data-lucide="book-open"></i> 学习</h1>
+
+      <div class="modules-grid">
+      <section class="card module-card">
+        <h2><i data-lucide="book-open"></i> 语文</h2>
+        <p>当前模块包含中小学语文背诵的诗词...</p>
+        <div class="module-links">
+          <a href="/src/pages/Study/04-recite-yuwen-9/index.html" class="card module-link">
+            1. 中小学语文
+          </a>
+        </div>
+      </section>
+
+      <section class="card module-card">
+        <h2><i data-lucide="book-open"></i> 英语</h2>
+        <p>当前模块包含小学英语对话练习...</p>
+        <div class="module-links">
+          <a href="/src/pages/Study/03-primary-english-dialogues/index.html" class="card module-link">
+            1. 小学英语对话练习
+          </a>
+        </div>
+      </section>
+      
+      <section class="card module-card">
+        <h2><i data-lucide="cpu"></i> AI训练师 · 五级</h2>
+        <p>当前模块包含两个题库...</p>
+        <div class="module-links">
+          <a href="/src/pages/Study/01-ai-trainer-level5-answering/index.html" class="card module-link">
+            1. AI训练师 · 五级 · 教材配套
+          </a>
+          <a href="/src/pages/Study/02-ai-trainer-level5-answering/index.html" class="card module-link">
+            2. AI训练师 · 五级(不含Python)
+          </a>
+        </div>
+      </section>
+      </div>
+    </div>
+
+  </body>
+</html>

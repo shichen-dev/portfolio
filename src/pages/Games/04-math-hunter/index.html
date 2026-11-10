@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏹 射日游戏</title>
+    <script type="module" crossorigin src="/assets/js/pages/Games/04-math-hunter-288IPc6v.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/04-math-hunter-DpMRsfCA.css">
+  </head>
+  <body>
+    <div class="game-container" id="app">
+      <!-- ===== 顶部栏 ===== -->
+      <div class="header">
+        <div class="title">🏹 射日游戏</div>
+        <div class="stats">
+          <span
+            ><span class="icon">☀️</span> 剩余
+            <span id="sunCount">5</span></span
+          >
+          <span
+            ><span class="icon">⭐</span> 得分
+            <span id="scoreCount">0</span></span
+          >
+          <span
+            ><span class="icon">📈</span> 等级
+            <span id="levelDisplay">1</span></span
+          >
+          <span class="timer-display">
+            <span class="icon">⏱️</span>
+            <span id="timerDisplay">00:00</span>
+          </span>
+          <span class="timer-stats" id="timerStats">
+            <span class="icon">📊</span>
+            <span id="avgTimeDisplay">--</span>
+          </span>
+          <span class="record-btn-wrap">
+            <span class="record-btn" id="recordBtn">📋 记录</span>
+          </span>
+          <span class="user-btn-wrap">
+            <span class="user-btn" id="userBtn"
+              >👤 <span id="currentUserName">加载中...</span></span
+            >
+          </span>
+        </div>
+      </div>
+
+      <!-- ===== 天空 ===== -->
+      <div class="sky" id="sky"></div>
+
+      <!-- ===== 底部控制区 ===== -->
+      <div class="bottom-area">
+        <!-- 弓箭手 -->
+        <div class="archer-area">
+          <div class="archer-canvas-wrap">
+            <canvas id="archerCanvas" width="320" height="300"></canvas>
+          </div>
+        </div>
+
+        <!-- 方向键 -->
+        <!-- <div class="dpad">
+                <div class="dpad-row">
+                    <div class="dpad-btn" id="btnUp"><span class="arrow">▲</span></div>
+                </div>
+                <div class="dpad-row">
+                    <div class="dpad-btn" id="btnLeft"><span class="arrow">◀</span></div>
+                    <div class="dpad-btn" id="btnDown"><span class="arrow">▼</span></div>
+                    <div class="dpad-btn" id="btnRight"><span class="arrow">▶</span></div>
+                </div>
+            </div> -->
+
+        <!-- 题目交互 -->
+        <div class="quiz-area">
+          <div class="quiz-prompt" id="quizPrompt">👆 点击太阳选择目标</div>
+          <div class="quiz-question" id="quizQuestion">
+            <span class="q-label">🎯 目标</span>
+            <span id="questionText">—</span>
+          </div>
+          <div class="quiz-input-row">
+            <div class="answer-display" id="answerDisplay">__</div>
+            <input
+              type="text"
+              id="answerInput"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="4"
+              autocomplete="off"
+              aria-label="输入答案"
+              placeholder="答案"
+            />
+            <button id="submitAnswer">🏹 射日</button>
+            <span class="input-hint">↵ 回车</span>
+            <span class="question-timer" id="questionTimer"
+              >⏱️ <span id="questionTimeDisplay">0.0</span>s</span
+            >
+          </div>
+          <div class="quiz-feedback" id="feedback"></div>
+        </div>
+
+        <!-- ===== 成长等级区域（自适应） ===== -->
+        <div class="level-area">
+          <div class="level-display">
+            <span class="level-icon" id="levelIcon">🌱</span>
+            <span class="level-label">成长</span>
+            <span class="level-number" id="levelNumber">1</span>
+            <span class="level-max">/ 18</span>
+            <span class="level-stars" id="levelStars">⭐</span>
+          </div>
+
+          <!-- 总进度条 -->
+          <div class="progress-container">
+            <div class="progress-label">
+              <span>🏹 射日进度</span>
+              <span id="progressText">1 / 18</span>
+            </div>
+            <div class="level-progress" id="totalProgress">
+              <div
+                class="progress-bar"
+                id="progressBar"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- 阶段内进度条 -->
+          <div class="progress-container phase-progress">
+            <div class="progress-label">
+              <span>⭐ 阶段进度</span>
+              <span id="phaseProgressText">⭐</span>
+            </div>
+            <div class="level-progress" id="phaseProgress">
+              <div
+                class="progress-bar phase-bar"
+                id="phaseProgressBar"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <div class="level-detail">
+            <span class="level-range" id="levelRange">10以内</span>
+            <span class="level-status" id="levelStatus">🎯 练习中</span>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="level-actions" id="levelActions" style="display: none">
+            <button class="btn-level-up" id="btnLevelUp">⬆ 升级</button>
+            <button class="btn-practice" id="btnPractice">🔄 继续练习</button>
+          </div>
+        </div>
+
+        <!-- 音量控制 -->
+        <div class="sound-control">
+          <div class="label">🔊</div>
+          <input type="range" id="volumeControl" min="0" max="100" value="60" />
+        </div>
+
+        <!-- ===== 移动端自定义键盘 ===== -->
+        <div class="mobile-keypad" id="mobileKeypad">
+          <div class="keypad-row">
+            <button class="key-btn" data-key="1">1</button>
+            <button class="key-btn" data-key="2">2</button>
+            <button class="key-btn" data-key="3">3</button>
+            <button class="key-btn" data-key="4">4</button>
+            <button class="key-btn" data-key="5">5</button>
+          </div>
+          <div class="keypad-row">
+            <button class="key-btn" data-key="6">6</button>
+            <button class="key-btn" data-key="7">7</button>
+            <button class="key-btn" data-key="8">8</button>
+            <button class="key-btn" data-key="9">9</button>
+            <button class="key-btn" data-key="0">0</button>
+          </div>
+          <div class="keypad-row">
+            <button class="key-btn key-delete" data-key="del">⌫</button>
+            <button class="key-btn key-submit" data-key="submit">✓ 确认</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 庆祝弹窗 ===== -->
+      <div class="celebration-overlay" id="celebrationOverlay">
+        <div class="celebration-box">
+          <span class="big-emoji">🎉</span>
+          <h2>🌅 升级！</h2>
+          <p>你已进入新的阶段！</p>
+          <p style="font-size: 16px; opacity: 0.7" id="celebrationStats">
+            得分: 0
+          </p>
+          <button class="btn-next" id="nextLevelBtn">🚀 继续</button>
+        </div>
+      </div>
+
+      <!-- ===== 设置弹窗 ===== -->
+      <div class="settings-overlay" id="settingsOverlay">
+        <div class="settings-modal">
+          <div class="settings-header">
+            <span class="settings-icon">🏹</span>
+            <h2>练习设置</h2>
+          </div>
+          <div class="settings-body">
+            <div class="settings-group">
+              <label class="settings-label">👤 当前玩家</label>
+              <div class="settings-player-row">
+                <span id="settingsUserName" class="settings-user-name"
+                  >加载中...</span
+                >
+                <button class="settings-switch-btn" id="settingsSwitchUserBtn">
+                  切换 / 新增
+                </button>
+              </div>
+            </div>
+            <!-- 模式选择 -->
+            <div class="settings-group">
+              <label class="settings-label">📌 运算类型</label>
+              <div class="settings-mode">
+                <label class="mode-option active">
+                  <input
+                    type="radio"
+                    name="operationMode"
+                    value="add-sub"
+                    checked
+                  />
+                  <span class="mode-label">加减</span>
+                  <span class="mode-desc">加法与减法</span>
+                </label>
+                <label class="mode-option">
+                  <input
+                    type="radio"
+                    name="operationMode"
+                    value="multiplication"
+                  />
+                  <span class="mode-label">乘法</span>
+                  <span class="mode-desc">九九乘法随机练习</span>
+                </label>
+                <label class="mode-option">
+                  <input type="radio" name="operationMode" value="mixed" />
+                  <span class="mode-label">混合</span>
+                  <span class="mode-desc">加、减、乘随机出题</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 时长选择 -->
+            <div class="settings-group" id="durationGroup">
+              <label class="settings-label">⏱️ 时长</label>
+              <div class="settings-duration">
+                <button class="duration-btn" data-minutes="1">1</button>
+                <button class="duration-btn active" data-minutes="2">2</button>
+                <button class="duration-btn" data-minutes="3">3</button>
+                <button class="duration-btn" data-minutes="5">5</button>
+                <button class="duration-btn" data-minutes="10">10</button>
+                <span class="duration-unit">分钟</span>
+              </div>
+            </div>
+
+            <div class="settings-hint">
+              💡 时间到后自动停止，显示本次练习成绩
+            </div>
+          </div>
+          <div class="settings-footer">
+            <button class="settings-start-btn" id="settingsStartBtn">
+              🚀 开始射日
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 结果汇总弹窗 ===== -->
+      <div class="result-overlay" id="resultOverlay">
+        <div class="result-modal">
+          <div class="result-header">
+            <span class="result-icon">⏰</span>
+            <h2>时间到！</h2>
+            <p class="result-subtitle">本次练习结束，看看你的成绩吧 👇</p>
+          </div>
+          <div class="result-stats" id="resultStats">
+            <div class="result-stat-item">
+              <span class="result-stat-value" id="resultCorrect">0</span>
+              <span class="result-stat-label">✅ 答对</span>
+            </div>
+            <div class="result-stat-item">
+              <span class="result-stat-value" id="resultWrong">0</span>
+              <span class="result-stat-label">❌ 答错</span>
+            </div>
+            <div class="result-stat-item">
+              <span class="result-stat-value" id="resultRate">0%</span>
+              <span class="result-stat-label">📈 正确率</span>
+            </div>
+            <div class="result-stat-item">
+              <span class="result-stat-value" id="resultScore">+0</span>
+              <span class="result-stat-label">⭐ 本次得分</span>
+            </div>
+            <div class="result-stat-item">
+              <span class="result-stat-value" id="resultLevel">1</span>
+              <span class="result-stat-label">🏹 当前等级</span>
+            </div>
+          </div>
+          <div class="result-wrong-section" id="resultWrongSection">
+            <div class="result-wrong-header">
+              <span>❌ 错题回顾</span>
+              <span id="resultWrongCount">0 题</span>
+            </div>
+            <div class="result-wrong-list" id="resultWrongList">
+              <div class="result-empty">🎉 全部正确！太棒了！</div>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button class="result-btn" id="resultRecordBtn">
+              📋 查看详细记录
+            </button>
+            <button class="result-btn primary" id="resultRestartBtn">
+              🔄 再来一轮
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 答题记录模态框 ===== -->
+    <div class="record-overlay" id="recordOverlay">
+      <div class="record-modal">
+        <div class="record-header">
+          <h2>📋 答题记录</h2>
+          <div class="record-actions">
+            <button class="record-action-btn" id="printRecordBtn">
+              🖨️ 打印
+            </button>
+            <button class="record-action-btn" id="copyRecordBtn">
+              📋 复制
+            </button>
+            <button
+              class="record-action-btn"
+              id="clearRecordBtn"
+              style="color: #ff6b6b"
+            >
+              🗑️ 清空
+            </button>
+            <button class="record-close-btn" id="closeRecordBtn">✕</button>
+          </div>
+        </div>
+        <div class="record-stats" id="recordStats">
+          <span>总题数: <strong id="recordTotal">0</strong></span>
+          <span>✅ 正确: <strong id="recordCorrect">0</strong></span>
+          <span>❌ 错误: <strong id="recordWrong">0</strong></span>
+          <span>正确率: <strong id="recordRate">0%</strong></span>
+          <span>⏱️ 总用时: <strong id="recordTime">00:00</strong></span>
+        </div>
+        <div class="record-list" id="recordList">
+          <div class="record-empty">暂无答题记录，快去射日吧！🏹</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 用户管理弹窗 ===== -->
+    <div class="user-overlay" id="userOverlay">
+      <div class="record-modal" style="max-width: 420px; height: auto">
+        <!-- Tab 按钮 -->
+        <div class="modal-tabs">
+          <button class="modal-tab active" id="tabUsers">👥 用户管理</button>
+          <button class="modal-tab" id="tabRankings">🏆 排行榜</button>
+        </div>
+
+        <!-- 面板 1：用户列表 -->
+        <div id="panelUsers" style="display: block">
+          <div
+            class="record-header"
+            style="padding-top: 10px; border-bottom: none"
+          >
+            <h2>选择或新增用户</h2>
+            <button class="record-close-btn" id="closeUserBtn">✕</button>
+          </div>
+          <div
+            class="user-list"
+            id="userList"
+            style="margin: 15px 0; max-height: 200px; overflow-y: auto"
+          >
+            <!-- JS 动态渲染 -->
+          </div>
+          <div class="user-add-row" style="display: flex; gap: 10px">
+            <input
+              type="text"
+              id="newUserName"
+              placeholder="输入新用户名字"
+              maxlength="8"
+              style="
+                flex: 1;
+                padding: 8px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+              "
+            />
+            <button
+              id="addUserBtn"
+              class="result-btn primary"
+              style="padding: 8px 16px"
+            >
+              添加
+            </button>
+          </div>
+        </div>
+
+        <!-- 面板 2：排行榜 -->
+        <div id="panelRankings" style="display: none">
+          <div
+            class="record-header"
+            style="padding-top: 10px; border-bottom: none"
+          >
+            <h2>🏆 本机排行榜</h2>
+            <button class="record-close-btn" id="closeRankBtn">✕</button>
+          </div>
+          <div
+            id="rankingList"
+            style="max-height: 300px; overflow-y: auto; margin-top: 10px"
+          >
+            <!-- JS 动态渲染 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 引入 JS 模块 ===== -->
+  </body>
+</html>

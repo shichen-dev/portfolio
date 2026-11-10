@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数学小勇士 · 闯关</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        padding: 40px 20px;
+        transition:
+          background 0.3s,
+          color 0.3s;
+        --max-width: 700px;
+      }
+      .app {
+        max-width: min(100%, var(--max-width));
+        width: 100%;
+        background: var(--card);
+        color: var(--text);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        position: relative;
+        margin: 80px auto 0;
+      }
+
+      /* 头部 */
+      .game-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 16px;
+      }
+      .title {
+        font-size: clamp(24px, 2vw, 30px);
+        font-weight: 700;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+      }
+      .icon {
+        margin-right: 10px;
+        font-size: clamp(26px, 3vw, 32px);
+      }
+      .sub {
+        color: var(--text-sec);
+        margin-bottom: 0;
+        font-size: clamp(14px, 1.8vw, 16px);
+      }
+
+      /* 进度条 */
+      .progress {
+        display: flex;
+        gap: 6px;
+        margin: 18px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(148, 163, 184, 0.35);
+      }
+      .dot.correct {
+        background: #4caf50;
+      }
+      .dot.wrong {
+        background: #ef4444;
+        cursor: pointer;
+      }
+
+      /* 题目区 */
+      .question-box {
+        text-align: center;
+        margin: 30px 0;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+      }
+      .question {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+      }
+      .input-box {
+        width: 120px;
+        padding: 10px;
+        font-size: 20px;
+        text-align: center;
+        border: 2px solid rgba(148, 163, 184, 0.6);
+        border-radius: 10px;
+        outline: none;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .input-box:focus {
+        border-color: var(--accent);
+      }
+
+      /* 按钮 */
+      .btn {
+        padding: 14px 26px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin: 5px;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+      .btn-success {
+        background: #4caf50;
+        color: white;
+      }
+      .btn-success:hover {
+        background: #388e3c;
+      }
+      .btn:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+      }
+
+      /* 计时 & 分数 */
+      .info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        color: var(--text-sec);
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .info > div {
+        flex: 1 1 140px;
+      }
+
+      /* 复习 Tips */
+      .tips {
+        background: rgba(255, 248, 225, 0.9);
+        padding: 16px;
+        border-left: 4px solid #ffc107;
+        margin: 15px 0;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      /* 错题修改弹窗 */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.45);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 16px;
+      }
+      .modal-content {
+        background: var(--card);
+        padding: 20px;
+        border-radius: 16px;
+        width: min(100%, 420px);
+        max-width: 420px;
+        text-align: center;
+      }
+      .modal-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: var(--text);
+      }
+      .modal-input {
+        width: 100px;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        border: 2px solid rgba(148, 163, 184, 0.6);
+        border-radius: 10px;
+        margin: 10px 0;
+      }
+      .modal-btn {
+        padding: 10px 16px;
+        margin: 5px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .modal-btn-confirm {
+        background: #4caf50;
+        color: white;
+      }
+      .modal-btn-cancel {
+        background: #cbd5e1;
+        color: var(--text);
+      }
+
+      /* 隐藏 */
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 32px 16px;
+        }
+        .app {
+          max-width: 100%;
+          margin-top: 60px;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 18px;
+        }
+        .game-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .title {
+          font-size: 22px;
+        }
+        .sub {
+          font-size: 14px;
+        }
+        .question {
+          font-size: 26px;
+        }
+        .input-box {
+          width: 110px;
+        }
+        .btn {
+          width: 100%;
+          max-width: none;
+          padding: 14px 18px;
+        }
+        .info {
+          justify-content: flex-start;
+        }
+        .modal-content {
+          padding: 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 24px 12px;
+        }
+        .app {
+          margin-top: 0;
+        }
+        .title {
+          font-size: 20px;
+        }
+        .question {
+          font-size: 24px;
+        }
+        .btn {
+          font-size: 15px;
+          padding: 12px 14px;
+        }
+        .tips {
+          padding: 14px;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/js/pages/Games/03-math-D5cjLTA3.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/lucide.BSA8f3RJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.CcBe2Onj.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/common-0PrhADAX.css">
+  </head>
+  <body>
+    <div id="math-app" class="app">
+      <div v-if="!started" class="game-header">
+        <div class="title"><span class="icon">⚔️</span> 数学小勇士 · 闯关</div>
+        <div class="sub">40 关 · 挑战你的计算力</div>
+      </div>
+
+      <div v-if="!started" class="tips">
+        💡 复习小贴士：先算个位，再算十位，进位记得加 1！
+      </div>
+
+      <div v-if="!started" class="info">
+        <div>准备开始？</div>
+        <div>正确率：0 / 0</div>
+      </div>
+
+      <div v-if="!started" style="text-align: center; margin-top: 30px">
+        <button class="btn btn-primary" @click="startGame">开始闯关</button>
+      </div>
+
+      <!-- 游戏进行中 -->
+      <div v-if="started && !finished" class="game-header">
+        <div class="title"><span class="icon">⚔️</span> 数学小勇士 · 闯关</div>
+        <div class="sub">第 {{ currentIndex + 1 }} / 40 关</div>
+      </div>
+
+      <div v-if="started && !finished" class="tips">
+        💡 复习小贴士：先算个位，再算十位，进位记得加 1！
+      </div>
+
+      <div v-if="started && !finished" class="info">
+        <div>⏱️ {{ formatTime(timeElapsed) }}</div>
+        <div>⚔️ 正确：{{ correctCount }} / {{ currentIndex }}</div>
+      </div>
+
+      <div v-if="started && !finished" class="progress">
+        <div
+          v-for="(item, index) in questions"
+          :key="index"
+          class="dot"
+          :class="{ correct: item.isCorrect, wrong: item.isWrong }"
+          @click="handleDotClick(index)"
+        ></div>
+      </div>
+
+      <div v-if="started && !finished" class="question-box">
+        <div class="question">
+          {{ questions[currentIndex].a }} {{ questions[currentIndex].op }} {{
+          questions[currentIndex].b }} = ?
+        </div>
+        <input
+          type="number"
+          v-model="userAnswer"
+          class="input-box"
+          placeholder="?"
+          @keyup.enter="submitAnswer"
+          :disabled="isSubmitting"
+        />
+        <button
+          class="btn btn-success"
+          @click="submitAnswer"
+          :disabled="!userAnswer || isSubmitting"
+        >
+          {{ isSubmitting ? '出击中...' : '出击' }}
+        </button>
+      </div>
+
+      <!-- 错题修改弹窗 -->
+      <div v-if="showModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-title">🔁 修改错题</div>
+          第 {{ modalIndex + 1 }} 关：{{ questions[modalIndex].a }} {{
+          questions[modalIndex].op }} {{ questions[modalIndex].b }} = ?
+          <input
+            type="number"
+            v-model="modalAnswer"
+            class="modal-input"
+            placeholder="?"
+            @keyup.enter="confirmModify"
+          />
+          <div>
+            <button class="modal-btn modal-btn-confirm" @click="confirmModify">
+              确认修改
+            </button>
+            <button class="modal-btn modal-btn-cancel" @click="cancelModify">
+              取消
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 闯关完成 -->
+      <div v-if="finished" class="game-header">
+        <div class="title"><span class="icon">🏆</span> 闯关完成！</div>
+        <div class="sub">共 40 关 · 用时 {{ formatTime(timeElapsed) }}</div>
+      </div>
+
+      <div v-if="finished" class="tips">
+        💡 复习小贴士：错题记得多练几遍，下次一定能全对！
+      </div>
+
+      <div v-if="finished" class="info">
+        <div>⚔️ 最终战力：{{ correctCount }} / 40</div>
+        <div>⏱️ 用时：{{ formatTime(timeElapsed) }}</div>
+      </div>
+
+      <div v-if="finished" class="progress">
+        <div
+          v-for="(item, index) in questions"
+          :key="index"
+          class="dot"
+          :class="{ correct: item.isCorrect, wrong: item.isWrong }"
+          @click="handleDotClick(index)"
+        ></div>
+      </div>
+
+      <div v-if="finished" style="text-align: center; margin-top: 30px">
+        <button class="btn btn-primary" @click="reviewMistakes">
+          查看错题本
+        </button>
+        <button class="btn btn-success" @click="restartGame">再来一局</button>
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            started: false,
+            finished: false,
+            currentIndex: 0,
+            timeElapsed: 0,
+            timer: null,
+            questions: [],
+            userAnswer: "",
+            correctCount: 0,
+            isSubmitting: false,
+            showModal: false,
+            modalIndex: -1,
+            modalAnswer: "",
+            canReview: false, // 是否允许修改错题
+          };
+        },
+        methods: {
+          startGame() {
+            this.started = true;
+            this.finished = false;
+            this.currentIndex = 0;
+            this.timeElapsed = 0;
+            this.correctCount = 0;
+            this.questions = [];
+            this.userAnswer = "";
+            this.canReview = false;
+            this.showModal = false;
+
+            // 生成 40 道随机题
+            for (let i = 0; i < 40; i++) {
+              let a, b, op;
+              const ops = ["+", "-"];
+              op = ops[Math.floor(Math.random() * ops.length)];
+
+              if (op === "+") {
+                a = Math.floor(Math.random() * 90) + 1; // 1~90
+                b = Math.floor(Math.random() * (100 - a)) + 1; // 保证 a+b < 100
+                this.questions.push({
+                  a,
+                  b,
+                  op,
+                  isCorrect: false,
+                  isWrong: false,
+                });
+              } else {
+                a = Math.floor(Math.random() * 90) + 10; // 10~99
+                b = Math.floor(Math.random() * (a - 1)) + 1; // 保证 a-b > 0
+                this.questions.push({
+                  a,
+                  b,
+                  op,
+                  isCorrect: false,
+                  isWrong: false,
+                });
+              }
+            }
+
+            // 开始计时
+            this.timer = setInterval(() => {
+              this.timeElapsed++;
+            }, 1000);
+
+            // 聚焦输入框
+            this.$nextTick(() => {
+              const input = document.querySelector(".input-box");
+              if (input) input.focus();
+            });
+          },
+
+          submitAnswer() {
+            if (!this.userAnswer || this.isSubmitting) return;
+
+            this.isSubmitting = true;
+            const current = this.questions[this.currentIndex];
+            const correctAnswer = this.calculate(
+              current.a,
+              current.b,
+              current.op,
+            );
+
+            if (parseInt(this.userAnswer) === correctAnswer) {
+              current.isCorrect = true;
+              current.isWrong = false;
+              this.correctCount++;
+            } else {
+              current.isCorrect = false;
+              current.isWrong = true;
+            }
+
+            this.userAnswer = "";
+
+            // 延迟 0.5s 后进入下一题
+            setTimeout(() => {
+              this.currentIndex++;
+              this.isSubmitting = false;
+
+              if (this.currentIndex >= 40) {
+                this.finished = true;
+                this.canReview = true; // 允许修改错题
+                clearInterval(this.timer);
+              } else {
+                // 聚焦下一题输入框
+                this.$nextTick(() => {
+                  const input = document.querySelector(".input-box");
+                  if (input) input.focus();
+                });
+              }
+            }, 500);
+          },
+
+          calculate(a, b, op) {
+            if (op === "+") return a + b;
+            if (op === "-") return a - b;
+            return 0;
+          },
+
+          handleDotClick(index) {
+            if (!this.canReview) return; // 未完成时不能点
+            if (this.questions[index].isCorrect) return; // 对的题不能改
+
+            this.modalIndex = index;
+            this.modalAnswer = "";
+            this.showModal = true;
+          },
+
+          confirmModify() {
+            const current = this.questions[this.modalIndex];
+            const correctAnswer = this.calculate(
+              current.a,
+              current.b,
+              current.op,
+            );
+
+            if (parseInt(this.modalAnswer) === correctAnswer) {
+              current.isCorrect = true;
+              current.isWrong = false;
+              // 如果之前算错了，现在改对了，正确数+1
+              if (!current.wasCorrectBefore) {
+                this.correctCount++;
+              }
+              current.wasCorrectBefore = true;
+            } else {
+              current.isCorrect = false;
+              current.isWrong = true;
+            }
+
+            this.showModal = false;
+            this.modalAnswer = "";
+          },
+
+          cancelModify() {
+            this.showModal = false;
+            this.modalAnswer = "";
+          },
+
+          reviewMistakes() {
+            alert("错题本：点击右上角红色图标可修改（已完成所有关卡后才开放）");
+          },
+
+          restartGame() {
+            this.started = false;
+            this.finished = false;
+            this.currentIndex = 0;
+            this.timeElapsed = 0;
+            this.correctCount = 0;
+            this.questions = [];
+            this.userAnswer = "";
+            this.canReview = false;
+            this.showModal = false;
+          },
+
+          formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+          },
+        },
+
+        mounted() {
+          // 页面加载后自动聚焦（可选）
+          // this.$nextTick(() => {
+          //   const input = document.querySelector('.input-box');
+          //   if (input) input.focus();
+          // });
+        },
+      }).mount("#math-app");
+    </script>
+  </body>
+</html>

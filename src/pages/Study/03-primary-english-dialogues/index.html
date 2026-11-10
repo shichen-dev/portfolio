@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家庭英语天天说</title>
+    <!-- 样式独立引入 -->
+    <script type="module" crossorigin src="/assets/js/pages/Study/03-primary-english-dialogues-C4n2S5n9.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/modulepreload-polyfill.Dezn_h7o.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/lucide.BSA8f3RJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/main.CcBe2Onj.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/chunks/03-primary-english-dialogues.CPkYCXzM.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/03-primary-english-dialogues-C6k6r2Qx.css">
+  </head>
+  <body>
+    <div class="container" id="dialogue-app">
+      <!-- 工具栏 -->
+      <div class="toolbar">
+        <span class="scene-counter" id="sceneCounter">第 1 / 22 篇</span>
+        <div class="toolbar-right">
+          <div class="scene-select-wrap">
+            <label for="sceneSelect" class="visually-hidden">选择对话</label>
+            <select id="sceneSelect" aria-label="选择对话"></select>
+          </div>
+          <div class="play-all-wrap">
+            <button class="btn btn-play-all" id="playAllBtn">
+              🔊 播放全文
+            </button>
+          </div>
+          <button class="btn" id="showAllCnBtn">🌐 显示全部翻译</button>
+          <button class="settings-btn" id="settingsBtn" title="声音设置">
+            ⚙️
+          </button>
+        </div>
+      </div>
+
+      <!-- 标题 -->
+      <div class="scene-title" id="sceneTitle">
+        Morning Battle
+        <span class="sub">场景 1 · 早晨的"战斗"</span>
+      </div>
+
+      <!-- 对话 -->
+      <div class="dialogue" id="dialogueContainer"></div>
+
+      <!-- 翻页 -->
+      <div class="pagination">
+        <button class="btn" id="prevBtn">← 上一篇</button>
+        <span class="page-dots" id="pageDots">● ● ● ● ●</span>
+        <button class="btn" id="nextBtn">下一篇 →</button>
+      </div>
+      <div id="exit-button-selector"></div>
+    </div>
+
+    <!-- 单词弹窗 -->
+    <div class="popup-overlay" id="popupOverlay">
+      <div class="popup">
+        <div class="popup-word" id="popupWord">apple</div>
+        <div class="popup-meaning" id="popupMeaning">苹果</div>
+        <div class="popup-extra" id="popupExtra">点击下方按钮听发音</div>
+        <button class="popup-speak" id="popupSpeakBtn">🔊 听发音</button>
+        <br />
+        <button class="popup-close" id="popupCloseBtn">关闭</button>
+      </div>
+    </div>
+
+    <!-- 声音设置面板 -->
+    <div class="settings-panel" id="settingsPanel">
+      <div class="panel">
+        <div class="panel-title">🎙️ 声音设置</div>
+        <div class="panel-sub">为每个角色选择不同的朗读声音</div>
+
+        <div id="settingsContent">
+          <!-- 由 JS 动态渲染 -->
+        </div>
+
+        <div class="panel-actions">
+          <button class="btn btn-secondary" id="settingsCloseBtn">关闭</button>
+          <button class="btn btn-secondary" id="settingsResetBtn">
+            重置默认
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据与逻辑分离引入 -->
+
+  </body>
+</html>
